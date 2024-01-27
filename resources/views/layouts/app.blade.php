@@ -7,7 +7,6 @@ $url_path = ltrim($url_path, '/');
 // Split the path into an array
 $path_array = explode('/', $url_path);
 
-$name = 'arkarmin';
 @endphp
 
 <!doctype html>
@@ -27,7 +26,10 @@ $name = 'arkarmin';
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </head>
 
 <body>
