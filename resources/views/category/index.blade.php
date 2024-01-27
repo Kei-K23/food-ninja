@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <h2 class="text-primary">This is contact page</h2>
+    <h2 class="text-primary">This is category page</h2>
 </div>
 @endsection

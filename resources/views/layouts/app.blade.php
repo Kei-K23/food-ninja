@@ -1,3 +1,15 @@
+@php
+$url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Remove the leading slash if present
+$url_path = ltrim($url_path, '/');
+
+// Split the path into an array
+$path_array = explode('/', $url_path);
+
+$name = 'arkarmin';
+@endphp
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -23,7 +35,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Food-Ninja') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -41,11 +53,19 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                            <a class="{{ $path_array[0]=='' ? 'nav-link active text-primary' : 'nav-link' }}"
+                                href="{{ route('home') }}">{{ __('Home') }}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="{{ $path_array[0]=='category' ? 'nav-link active text-primary' : 'nav-link' }}"
+                                href="{{ route('category') }}">{{ __('Category') }} </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                            <a class="{{ $path_array[0]=='menu' ? 'nav-link active text-primary' : 'nav-link' }}"
+                                href="{{ route('menu') }}">{{ __('Menu') }} </a>
                         </li>
+
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
@@ -66,7 +86,8 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a class="dropdown-item" href="{{ route('profile') }}">{{ __('Profile')}}</a>
+                                <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
