@@ -24,4 +24,4 @@ Route::get('/profile', [App\Http\Controllers\HomeController::class, 'index'])->n
 
 Route::get('/contact', function () {
     return view("contact.index");
-});
+})->name("contact");
