@@ -3,5 +3,12 @@
 @section('content')
 <div class="container">
     <h2 class="text-primary">This is menu page</h2>
+    <ul>
+        @foreach ($menus as $menu)
+        <li>
+            {{ $menu }}
+        </li>
+        @endforeach
+    </ul>
 </div>
 @endsection

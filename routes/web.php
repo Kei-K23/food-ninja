@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +25,6 @@ Auth::routes();
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
-Route::get('/category', function () {
-    return view("category.index");
-})->name("category");
+Route::get('/category', [CategoryController::class, 'index'])->name("category");
 
-Route::get('/menu', function () {
-    return view("menu.index");
-})->name("menu");
+Route::get('/menu', [MenuController::class, 'index'])->name("menu");
