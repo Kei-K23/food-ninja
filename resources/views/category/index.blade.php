@@ -2,13 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h2 class="text-primary">This is category page</h2>
-    <ul>
+    <h2 class="text-primary">Category</h2>
+    <div class="row ">
         @foreach ($categories as $category)
-        <li>
-            {{ $category->name }}
-        </li>
+        <x-category-card :category="$category" />
         @endforeach
-    </ul>
+    </div>
 </div>
 @endsection

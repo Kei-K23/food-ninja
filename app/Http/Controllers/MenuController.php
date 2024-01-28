@@ -8,13 +8,15 @@ use Illuminate\View\View;
 
 class MenuController extends Controller
 {
+    public function index(Request $req): View
+    {
+        $menu = Menu::latest()->filter($req->query())->paginate(10);
+
+        return view('menu.index', ['menus' => $menu]);
+    }
+
     public function show(Menu $menu): View
     {
         return view('menu.show', ['menu' => $menu]);
-    }
-
-    public function index(): View
-    {
-        return view('menu.index', ['menus' => Menu::all()]);
     }
 }

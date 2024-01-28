@@ -20,4 +20,11 @@ class Menu extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query->where('name', 'like', '%' . $filters['search'] . '%');
+        }
+    }
 }

@@ -2,13 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h2 class="text-primary">This is menu page</h2>
-    <ul>
+    <h2 class="text-primary">Menu</h2>
+    <div class="row ">
         @foreach ($menus as $menu)
-        <li>
-            {{ $menu->restaurant->name }}
-        </li>
+        <x-menu-card :menu="$menu" />
         @endforeach
-    </ul>
+    </div>
+    <div class="my-5">
+        {{ $menus->links() }}
+    </div>
 </div>
 @endsection
