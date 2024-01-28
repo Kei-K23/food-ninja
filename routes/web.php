@@ -26,4 +26,8 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
 Route::get('/category', [CategoryController::class, 'index'])->name("category");
 
-Route::get('/menu', [MenuController::class, 'index'])->name("menu");
+// menu route
+Route::group([], function () {
+    Route::get('/menu', [MenuController::class, 'index'])->name("menu");
+    Route::get('/menu/{menu}', [MenuController::class, 'show'])->where('menu', '[0-9]+')->name('menu.show');
+});

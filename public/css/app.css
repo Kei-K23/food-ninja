@@ -11729,5 +11729,12 @@ fieldset:disabled .btn {
     text-overflow: ellipsis;
 }
 
+.border-top-1 {
+    border-top: 0.7px solid #cbccce;
+}
+
+.link-style-hide {
+    text-decoration: none;
+}
 
 /*# sourceMappingURL=bootstrap.min.css.map */

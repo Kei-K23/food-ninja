@@ -108,6 +108,28 @@ $path_array = explode('/', $url_path);
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="border-top-1  w-100 ">
+            <div class="my-4 d-flex justify-content-between align-items-center w-100  container">
+                <div>
+                    <a href="{{ url('/') }}" class="text-primary fs-2 link-style-hide fw-bolder ">{{ config('app.name',
+                        'Laravel')
+                        }}</a>
+                    <p class="text-muted ">Food for you</p>
+                    <p class="text-center ">CopyRight© {{ date('Y') }} Food-Ninja. All rights reserved.</p>
+                    <a class="link-style-hide " href="https://github.com/Kei-K23" target="__blank">Created with
+                        💙
+                        by kei-k </a>
+                </div>
+                <ul class="p-0 m-0">
+                    <li class="list-unstyled"><a class="link-style-hide text-muted" href="{{ route('home') }}">{{
+                            __('Home') }}</a></li>
+                    <li class="list-unstyled"><a class="link-style-hide text-muted " href="{{ route('category') }}">{{
+                            __('Category') }}</a></li>
+                    <li class="list-unstyled"><a class="link-style-hide text-muted " href="{{ route('menu') }}">{{
+                            __('Menu') }}</a></li>
+                </ul>
+            </div>
+        </footer>
     </div>
 </body>
 

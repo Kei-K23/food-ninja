@@ -38,23 +38,7 @@
         </div>
         <div class="row ">
             @foreach ($menus as $menu)
-            <div class="col-12 col-md-6 col-lg-4 my-2 ">
-                <div class="card">
-                    <img class="card-img-top img-thumbnail " src="{{ asset('images/' . $menu->image_url) }}"
-                        alt="{{ $menu->name }}" style="width: 100%; height: 220px;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between  align-items-center ">
-                            <h5 class="card-title">{{ $menu->name }}</h5>
-                            <h5 class="card-title">{{ $menu->price }} $</h5>
-                        </div>
-                        <p class="card-text truncate-paragraph">
-                            {{ $menu->description }}
-                        </p>
-                        <a href="#" class="btn btn-primary">Add To Cart</a>
-                        <a href="#" class="btn btn-secondary ">See More</a>
-                    </div>
-                </div>
-            </div>
+            <x-menu-card :menu="$menu" />
             @endforeach
         </div>
     </div>
