@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->text('image_url')->nullable();
             $table->text('address');
             $table->string('phone_number');
             $table->timestamps();
