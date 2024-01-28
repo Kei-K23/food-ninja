@@ -6,7 +6,7 @@
     <ul>
         @foreach ($menus as $menu)
         <li>
-            {{ $menu }}
+            {{ $menu->restaurant->name }}
         </li>
         @endforeach
     </ul>

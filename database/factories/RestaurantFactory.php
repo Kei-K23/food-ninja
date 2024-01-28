@@ -18,7 +18,7 @@ class RestaurantFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->company(),
             'category_id' => Category::factory(),
             'address' => fake()->address(),
             'phone_number' => fake()->phoneNumber()

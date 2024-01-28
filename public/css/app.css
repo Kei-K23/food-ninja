@@ -11719,4 +11719,15 @@ fieldset:disabled .btn {
     }
 }
 
+/* custom CSS */
+.truncate-paragraph {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 /*# sourceMappingURL=bootstrap.min.css.map */

@@ -36,14 +36,17 @@ class DatabaseSeeder extends Seeder
 
         foreach ($categories as $category) {
             Category::create([
-                'name' => $category
-            ]);
+                'name' => $category,
+                'image_url' => "$category.jpg"
+            ])->each(function ($cat) {
+                Restaurant::factory()->create([
+                    'category_id' => $cat->id
+                ])->each(function ($restaurant) {
+                    Menu::factory(10)->create([
+                        'restaurant_id' => $restaurant->id
+                    ]);
+                });
+            });
         }
-
-        Restaurant::factory(8)->create()->each(function ($restaurant) {
-            Menu::factory(10)->create([
-                'restaurant_id' => $restaurant->id
-            ]);
-        });
     }
 }
