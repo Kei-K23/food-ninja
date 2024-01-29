@@ -15,9 +15,14 @@
             <p>
                 {{ $menu->description }}
             </p>
+            <button class="btn btn-primary ">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Add to Cart</button>
         </div>
-        <img class="w-100  h-100 rounded-3 shadow-sm" src="{{ asset('images/' . $menu->image_url) }}"
-            alt="{{ $menu->name }}">
+        <div>
+            <img class="w-100  h-100 rounded-3 shadow-sm" src="{{ asset('images/' . $menu->image_url) }}"
+                alt="{{ $menu->name }}">
+        </div>
     </div>
 
     <h3 class="mt-5">Other popular {{ $menu->category->name }}</h3>

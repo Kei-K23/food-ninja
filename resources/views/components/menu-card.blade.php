@@ -7,7 +7,7 @@
                 <h5 class="card-title">{{ $menu->name }}</h5>
                 <h5 class="card-title">{{ $menu->price }} $</h5>
             </div>
-            <h6 class="card-subtitle mb-2 text-body-secondary ">{{ $menu->restaurant->name }}</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary text-truncate ">{{ $menu->restaurant->name }}</h6>
             <p class="card-text truncate-paragraph">
                 {{ $menu->description }}
             </p>

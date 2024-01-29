@@ -4,6 +4,7 @@
             alt="{{ $category->name }}" style="width: 100%; height: 150px;">
         <div class="card-body">
             <h5 class="card-title">{{ $category->name }}</h5>
+            <a href="{{ route('category.show', ['category' => $category->id]) }}" class="card-link">View</a>
         </div>
     </div>
 </div>

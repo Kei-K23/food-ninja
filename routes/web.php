@@ -24,7 +24,11 @@ Auth::routes();
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
-Route::get('/category', [CategoryController::class, 'index'])->name("category");
+// category route
+Route::group([], function () {
+    Route::get('/category', [CategoryController::class, 'index'])->name("category");
+    Route::get('/category/{category}', [CategoryController::class, 'show'])->where('category', '[0-9]+')->name('category.show');
+});
 
 // menu route
 Route::group([], function () {
