@@ -28,8 +28,15 @@ $path_array = explode('/', $url_path);
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/owl.autoplay.js') }}"></script>
 </head>
 
 <body>
@@ -131,6 +138,28 @@ $path_array = explode('/', $url_path);
             </div>
         </footer>
     </div>
+    <script>
+        $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        loop:true,
+        nav:true,
+        autoplay:true,
+        autoplayTimeout:1000,
+        autoplayHoverPause:true,
+        responsive:{
+        0:{
+        items:1
+        },
+        600:{
+        items:2
+        },
+        1000:{
+        items:3
+        }
+        }
+        })
+    </script>
 </body>
 
 </html>

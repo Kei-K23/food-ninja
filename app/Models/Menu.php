@@ -11,6 +11,12 @@ class Menu extends Model
 {
     use HasFactory;
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);

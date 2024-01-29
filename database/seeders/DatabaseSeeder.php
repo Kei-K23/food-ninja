@@ -31,26 +31,42 @@ class DatabaseSeeder extends Seeder
 
         // Create categories, restaurants, and menus
         foreach ($categories as $categoryName) {
-            $category = Category::create([
+            Category::create([
                 'name' => $categoryName,
-                'image_url' => "$categoryName.jpg" // Assuming images are named as per category names
+                'image_url' => "$categoryName.jpg"
             ]);
+        }
 
-            $this->createRestaurantsAndMenus($category);
+        $dataCategories = Category::all();
+
+        foreach ($dataCategories as $dataC) {
+            $this->createRestaurantsAndMenus($dataC);
         }
     }
 
-    // Helper function to create restaurants and menus for a given category
     private function createRestaurantsAndMenus(Category $category): void
     {
-        $category->restaurants()->createMany(
-            Restaurant::factory()
-                ->count(random_int(1, 2)) // Random number of restaurants per category
-                ->raw(['category_id' => $category->id]) // Set category_id
-        )->each(function ($restaurant) {
-            $restaurant->menus()->createMany(
-                Menu::factory()->count(10)->raw(['restaurant_id' => $restaurant->id]) // Create 10 menus per restaurant
-            );
-        });
+        $categories = Category::all();
+
+        Restaurant::factory()
+            ->count(random_int(1, 3))
+            ->create([
+                'image_url' => $category->image_url
+            ])->each(function ($restaurant) use ($categories) {
+                $categories->shuffle();
+
+                $categories->each(function ($cat) use ($restaurant) {
+                    $restaurant->menus()->createMany(
+                        Menu::factory()
+                            ->count(10)
+                            ->make([
+                                'category_id' => $cat->id,
+                                'restaurant_id' => $restaurant->id,
+                                'image_url' => $cat->image_url
+                            ])
+                            ->toArray()
+                    );
+                });
+            });
     }
 }

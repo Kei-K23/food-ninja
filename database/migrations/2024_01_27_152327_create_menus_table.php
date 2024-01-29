@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('image_url')->nullable();
             $table->integer('price');
             $table->foreignId('restaurant_id')->references('id')->on('restaurants')->cascadeOnDelete();
+            $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->timestamps();
         });
     }
