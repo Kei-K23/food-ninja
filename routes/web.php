@@ -23,7 +23,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+// profile route
+Route::group([], function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile/{profile}', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 // category route
 Route::group([], function () {
