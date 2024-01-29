@@ -5,7 +5,10 @@
     <div class="d-flex flex-column flex-md-row  align-items-start  justify-content-center gap-5">
         <div>
             <div class="d-flex align-items-center  justify-content-between ">
-                <h2 class="text-primary">{{ $menu->name }}</h2>
+                <div class="d-flex align-items-center gap-2 ">
+                    <h2 class="text-primary">{{ $menu->name }}</h2>
+                    <span class="text-muted ">({{ $menu->category->name }})</span>
+                </div>
                 <h2 class="text-success ">{{ $menu->price }} $</h2>
             </div>
             <p class="text-muted ">{{ $menu->restaurant->name }}</p>
@@ -17,7 +20,8 @@
             alt="{{ $menu->name }}">
     </div>
 
-    <div class="owl-carousel owl-theme">
+    <h3 class="mt-5">Other popular {{ $menu->category->name }}</h3>
+    <div class="owl-carousel owl-theme mt-4 ">
         @foreach ($menus as $menu)
         <div class="card">
             <img class="card-img-top img-thumbnail " src="{{ asset('images/' . $menu->image_url) }}"

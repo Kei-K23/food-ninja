@@ -17,6 +17,8 @@ class MenuController extends Controller
 
     public function show(Menu $menu): View
     {
-        return view('menu.show', ['menu' => $menu]);
+        $menus = Menu::where('category_id', $menu->category_id)->inRandomOrder()->take(6)->get();
+
+        return view('menu.show', ['menu' => $menu, 'menus' => $menus]);
     }
 }
