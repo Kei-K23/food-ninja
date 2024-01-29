@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,10 @@ Route::group([], function () {
 Route::group([], function () {
     Route::get('/menu', [MenuController::class, 'index'])->name("menu");
     Route::get('/menu/{menu}', [MenuController::class, 'show'])->where('menu', '[0-9]+')->name('menu.show');
+});
+
+// restaurant route
+Route::group([], function () {
+    Route::get('/restaurant', [RestaurantController::class, 'index'])->name('restaurant');
+    Route::get('/restaurant/{restaurant}', [RestaurantController::class, 'show'])->name('restaurant.show');
 });

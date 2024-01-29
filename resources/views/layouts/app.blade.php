@@ -74,9 +74,15 @@ $path_array = explode('/', $url_path);
                             <a class="{{ $path_array[0]=='category' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('category') }}">{{ __('Category') }} </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="{{ $path_array[0]=='menu' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('menu') }}">{{ __('Menu') }} </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="{{ $path_array[0]=='restaurant' ? 'nav-link active text-primary' : 'nav-link' }}"
+                                href="{{ route('restaurant') }}">{{ __('Restaurant') }} </a>
                         </li>
 
                         @guest
