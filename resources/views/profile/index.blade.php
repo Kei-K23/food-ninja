@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ ( $user->name . "'s" . ' Dashboard') }}</div>
+                <div class="card-header">{{ $user->name . "'s" . ' Dashboard' }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -19,9 +19,8 @@
                             @if ($user->image_url)
                             <div class="position-relative " style="width: 100px; height: 100px;">
                                 <img class="w-100  h-100 rounded-circle bg-secondary"
-                                    src="{{ asset('storage/images/'.$user->image_url) }}" alt="{{ $user->name }}">
-                                <form action="{{ route('profile.removeProfile' , ['profile' => $user]) }}"
-                                    method="POST">
+                                    src="{{ asset('storage/images/' . $user->image_url) }}" alt="{{ $user->name }}">
+                                <form action="{{ route('profile.removeProfile', ['profile' => $user]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button style="cursor: pointer; top: 1.1rem"
@@ -45,13 +44,13 @@
                             @if ($user->phone_number)
                             <p class="text-muted  ">
                                 <i class="fa-solid fa-phone"></i>
-                                {{$user->phone_number}}
+                                {{ $user->phone_number }}
                             </p>
                             @endif
                             @if ($user->address)
                             <p class="text-muted ">
                                 <i class="fa-solid fa-location-dot"></i>
-                                {{$user->address}}
+                                {{ $user->address }}
                             </p>
                             @endif
                         </div>
@@ -65,19 +64,19 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ ( 'Edit ' . $user->name . "'s" . ' profile') }}
+                    {{ 'Edit ' . $user->name . "'s" . ' profile' }}
                 </div>
-                {{-- @if($errors->any())
+                {{-- @if ($errors->any())
                 {!! implode('', $errors->all("<div class='alert alert-danger ' role='alert'><i
                         class='fa-solid fa-circle-exclamation'></i> :message</div>")) !!}
                 @endif --}}
                 @if (session('success'))
-                <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i> {{
-                    session('success') }}
+                <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i>
+                    {{ session('success') }}
                 </div>
                 @endif
                 <div class="card-body">
-                    <form class="w-px-500 p-3 p-md-3" action="{{ route('profile.update' , ['profile' => $user]) }}"
+                    <form class="w-px-500 p-3 p-md-3" action="{{ route('profile.update', ['profile' => $user]) }}"
                         method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -141,12 +140,12 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ ( "Edit account's " . $user->name ) }}
+                    {{ "Edit account's " . $user->name }}
                 </div>
 
                 <div class="card-body">
                     <form class="w-px-500 p-3 p-md-3"
-                        action="{{ route('profile.updatePassword' , ['profile' => $user]) }}" method="post"
+                        action="{{ route('profile.updatePassword', ['profile' => $user]) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -188,7 +187,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ ( "Delete " . $user->name . "'s Account" ) }}
+                    {{ 'Delete ' . $user->name . "'s Account" }}
                 </div>
                 <div class="card-body">
                     <h3 class="card-title text-danger fw-light ">! This will perminally delete all relative data of
@@ -208,6 +207,10 @@
         </div>
     </div>
 
-
+    <div class="row justify-content-center mt-3 ">
+        <div class="col-md-8">
+            <div id='map' class='map'></div>
+        </div>
+    </div>
 </div>
 @endsection

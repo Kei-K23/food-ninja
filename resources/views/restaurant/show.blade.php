@@ -8,9 +8,9 @@
                 <h2 class="text-primary">{{ $restaurant->name }}</h2>
             </div>
             <p>
-                {{ $restaurant->phone_number }}
+                <i class="fa-solid fa-phone"></i> {{ $restaurant->phone_number }}
             </p>
-            <p class="text-muted ">{{ $restaurant->address }}</p>
+            <p class="text-muted "><i class="fa-solid fa-location-dot"></i> {{ $restaurant->address }}</p>
         </div>
         <div>
             <img class="w-100  h-100 rounded-3 shadow-sm" src="{{ asset('images/' . $restaurant->image_url) }}"

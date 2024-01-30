@@ -11,8 +11,9 @@
                 </div>
                 <h2 class="text-success ">{{ $menu->price }} $</h2>
             </div>
-            <p class="text-muted ">{{ $menu->restaurant->name }}</p>
-            <p>
+            <a href="{{ route('restaurant.show', ['restaurant' => $menu->restaurant->id ]) }}"
+                class="card-subtitle mb-2 text-body-secondary text-truncate ">{{ $menu->restaurant->name }}</a>
+            <p class="mt-3">
                 {{ $menu->description }}
             </p>
             <button class="btn btn-primary ">

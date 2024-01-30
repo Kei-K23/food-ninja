@@ -7,8 +7,9 @@
                 <h5 class="card-title">{{ $menu->name }}</h5>
                 <h5 class="card-title">{{ $menu->price }} $</h5>
             </div>
-            <h6 class="card-subtitle mb-2 text-body-secondary text-truncate ">{{ $menu->restaurant->name }}</h6>
-            <p class="card-text truncate-paragraph">
+            <a href="{{ route('restaurant.show', ['restaurant' => $menu->restaurant->id ]) }}"
+                class="card-subtitle mb-2 text-body-secondary text-truncate ">{{ $menu->restaurant->name }}</a>
+            <p class="card-text truncate-paragraph mt-3 ">
                 {{ $menu->description }}
             </p>
             <a href="#" class="btn btn-primary">Add To Cart</a>

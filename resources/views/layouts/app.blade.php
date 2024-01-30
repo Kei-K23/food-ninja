@@ -36,6 +36,7 @@ $path_array = explode('/', $url_path);
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.1/maps/maps.css'>
 
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
@@ -66,22 +67,22 @@ $path_array = explode('/', $url_path);
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="{{ $path_array[0]=='' ? 'nav-link active text-primary' : 'nav-link' }}"
+                            <a class="{{ $path_array[0] == '' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('home') }}">{{ __('Home') }}</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="{{ $path_array[0]=='category' ? 'nav-link active text-primary' : 'nav-link' }}"
+                            <a class="{{ $path_array[0] == 'category' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('category') }}">{{ __('Category') }} </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="{{ $path_array[0]=='menu' ? 'nav-link active text-primary' : 'nav-link' }}"
+                            <a class="{{ $path_array[0] == 'menu' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('menu') }}">{{ __('Menu') }} </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="{{ $path_array[0]=='restaurant' ? 'nav-link active text-primary' : 'nav-link' }}"
+                            <a class="{{ $path_array[0] == 'restaurant' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('restaurant') }}">{{ __('Restaurant') }} </a>
                         </li>
 
@@ -105,9 +106,11 @@ $path_array = explode('/', $url_path);
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('profile') }}">{{ __('Profile')}}</a>
+                                <a class="dropdown-item" href="{{ route('profile') }}"><i
+                                        class="fa-solid fa-user me-2 "></i>{{ __('Profile') }}</a>
                                 <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();"><i
+                                        class="fa-solid fa-right-from-bracket me-1 "></i>
                                     {{ __('Logout') }}
                                 </a>
 
@@ -129,8 +132,7 @@ $path_array = explode('/', $url_path);
             <div class="my-4 d-flex justify-content-between align-items-center w-100  container">
                 <div>
                     <a href="{{ url('/') }}" class="text-primary fs-2 link-style-hide fw-bolder ">{{ config('app.name',
-                        'Laravel')
-                        }}</a>
+                        'Laravel') }}</a>
                     <p class="text-muted ">Food for you</p>
                     <p class="text-center ">CopyRight© {{ date('Y') }} Food-Ninja. All rights reserved.</p>
                     <a class="link-style-hide " href="https://github.com/Kei-K23" target="__blank">Created with
@@ -148,30 +150,72 @@ $path_array = explode('/', $url_path);
             </div>
         </footer>
     </div>
+
+    {{-- carousel --}}
     <script>
         $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:10,
-        loop:true,
-        nav:true,
-        autoplay:true,
-        autoplayTimeout:3000,
-        autoplayHoverPause:true,
-        responsive:{
-        0:{
-        items:1
-        },
-        600: {
-        items: 2
-        },
-        1000: {
-        items: 3
-        },
-        1260: {
-        items:4
-        }
-        }
+            loop: true,
+            margin: 10,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                },
+                1260: {
+                    items: 4
+                }
+            }
         })
+    </script>
+
+    {{-- map integration --}}
+    <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.1/maps/maps-web.min.js'></script>
+    <script src="{{ asset('js/responsive-map.js') }}"></script>
+    <script>
+        // Define default center coordinates
+        let defaultCenter = [96.1951, 16.8661];
+        let defaultMarker = null; // Variable to hold the default marker
+
+        const map = tt.map({
+            key: "{{ config('services.tomtom_map_api_key') }}",
+            container: 'map',
+            dragPan: !isMobileOrTablet(),
+            center: defaultCenter,
+        });
+
+        // Add controls
+        map.addControl(new tt.FullscreenControl());
+        map.addControl(new tt.NavigationControl());
+
+        // Add default marker on load
+        map.on('load', () => {
+            defaultMarker = new tt.Marker().setLngLat(defaultCenter).addTo(map);
+        });
+
+        // Listen for click events on the map
+        map.on('click', (event) => {
+            // Get the coordinates of the clicked location
+            const clickedCoordinates = [event.lngLat.lng, event.lngLat.lat];
+
+            // Remove the default marker if it exists
+            if (defaultMarker) {
+                defaultMarker.remove();
+                defaultMarker = null; // Reset the default marker variable
+            }
+
+            // Add a new marker at the clicked location
+            new tt.Marker().setLngLat(clickedCoordinates).addTo(map);
+        });
     </script>
 </body>
 

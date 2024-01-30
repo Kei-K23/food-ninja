@@ -18,7 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('image_url')->nullable();
-            $table->text('address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->string('phone_number')->nullable();
             $table->rememberToken();
             $table->timestamps();
