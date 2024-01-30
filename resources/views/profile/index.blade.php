@@ -67,9 +67,14 @@
                 <div class="card-header">
                     {{ ( 'Edit ' . $user->name . "'s" . ' profile') }}
                 </div>
-                @if($errors->any())
+                {{-- @if($errors->any())
                 {!! implode('', $errors->all("<div class='alert alert-danger ' role='alert'><i
                         class='fa-solid fa-circle-exclamation'></i> :message</div>")) !!}
+                @endif --}}
+                @if (session('success'))
+                <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i> {{
+                    session('success') }}
+                </div>
                 @endif
                 <div class="card-body">
                     <form class="w-px-500 p-3 p-md-3" action="{{ route('profile.update' , ['profile' => $user]) }}"
@@ -79,13 +84,12 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="Name" @error('name')
-                                    is-invalid @enderror value="{{ $user->name }}">
+                                <input type="text" class="form-control  " name="name" placeholder="Name"
+                                    value="{{ $user->name }}" aria-describedby="feedback-name">
                                 @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
+
                             </div>
                         </div>
 
@@ -93,11 +97,9 @@
                             <label class="col-sm-3 col-form-label">Phone</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="phone_number" placeholder="Phone"
-                                    @error('phone_number') is-invalid @enderror value="{{ $user->phone_number }}">
+                                    value="{{ $user->phone_number }}">
                                 @error('phone_number')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -105,12 +107,10 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Address</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="address" placeholder="Address" @error('address')
-                                    is-invalid rows="3" @enderror>{{ $user->address }}</textarea>
+                                <textarea class="form-control" name="address" placeholder="Address"
+                                    rows="3">{{ $user->address }}</textarea>
                                 @error('address')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -118,19 +118,17 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Profile Picture</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control" name="image_url" @error('image_url') is-invalid
-                                    @enderror>
+                                <input type="file" class="form-control" name="image_url">
+                                @error('image_url')
+                                <span class="text-danger  ">*{{ $message }}</span>
+                                @enderror
                             </div>
-                            @error('image_url')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-success ">Edit</button>
+                                <button type="submit" class="btn btn-success "><i class="fa-solid fa-pen-to-square"></i>
+                                    Edit</button>
                             </div>
                         </div>
                     </form>
@@ -139,81 +137,77 @@
         </div>
     </div>
 
-    {{-- <div class="row justify-content-center mt-3 ">
+    <div class="row justify-content-center mt-3 ">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     {{ ( "Edit account's " . $user->name ) }}
                 </div>
-                @if($errors->any())
-                {!! implode('', $errors->all("<div class='alert alert-danger ' role='alert'>:message</div>")) !!}
-                @endif
+
                 <div class="card-body">
-                    <form class="w-px-500 p-3 p-md-3" action="{{ route('profile.update' , ['profile' => $user]) }}"
-                        method="post" enctype="multipart/form-data">
+                    <form class="w-px-500 p-3 p-md-3"
+                        action="{{ route('profile.updatePassword' , ['profile' => $user]) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Name</label>
+                            <label class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="Name" @error('name')
-                                    is-invalid @enderror value="{{ $user->name }}">
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <input type="password" class="form-control" name="password" placeholder="New password"
+                                    value="{{ old('password') }}" required>
+                                @error('password')
+                                <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Phone</label>
+                            <label class="col-sm-3 col-form-label">Confirm Password</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="phone_number" placeholder="Phone"
-                                    @error('phone_number') is-invalid @enderror value="{{ $user->phone_number }}">
-                                @error('phone_number')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <input type="password" class="form-control" name="confirm_password"
+                                    placeholder="Confirm password" required>
+                                @error('confirm_password')
+                                <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Address</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="address" placeholder="Address" @error('address')
-                                    is-invalid rows="3" @enderror>{{ $user->address }}</textarea>
-                                @error('address')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Profile Picture</label>
-                            <div class="col-sm-9">
-                                <input type="file" class="form-control" name="image_url" @error('image_url') is-invalid
-                                    @enderror>
-                            </div>
-                            @error('image_url')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-sm-9">
-                                <button type="submit" class="btn btn-success ">Edit</button>
+                                <button type="submit" class="btn btn-success ">Update</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
+
+
+    <div class="row justify-content-center mt-3 ">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    {{ ( "Delete " . $user->name . "'s Account" ) }}
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-danger fw-light ">! This will perminally delete all relative data of
+                        this user!</h3>
+                    <form class="w-px-500 p-3 p-md-3" action="{{ route('profile.destroy') }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="row mb-3">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-danger  "><i class="fa-solid fa-trash-can"></i>
+                                    Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 @endsection

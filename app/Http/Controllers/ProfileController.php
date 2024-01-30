@@ -44,7 +44,7 @@ class ProfileController extends Controller
             'phone_number' => ['nullable', 'string']
         ]);
 
-        // Check if the authenticated user is authorized to update the profile
+
         $isAuthUser = Auth::user()->id == $profile->id;
 
         if (!$isAuthUser) {
@@ -68,9 +68,9 @@ class ProfileController extends Controller
     }
 
     // remove profile image
-    public function removeProfile(Request $request, User $profile)
+    public function removeProfile(User $profile)
     {
-        // Check if the authenticated user is authorized to update the profile
+
         $isAuthUser = Auth::user()->id == $profile->id;
 
         if (!$isAuthUser) {
@@ -80,6 +80,30 @@ class ProfileController extends Controller
         $profile->update(['image_url' => null]);
 
         return back()->with('success', 'Profile successfully updated');
+    }
+
+    public function updatePassword(Request $request, User $profile)
+    {
+        $validatedData = $request->validate([
+            'password' => ['string', 'min:4'],
+            'confirm_password' => ['same:password'],
+        ]);
+
+        $isAuthUser = Auth::user()->id == $profile->id;
+
+        if (!$isAuthUser) {
+            return back()->with('error', 'Unauthorized user!');
+        }
+
+        $profile->update([
+            'password' => bcrypt($validatedData['password'])
+        ]);
+
+        // Logout the current user
+        Auth::logout();
+
+        // Redirect to the login page
+        return redirect()->route('login')->with('success', 'Profile password updated. Please log in again.');
     }
 
     /**

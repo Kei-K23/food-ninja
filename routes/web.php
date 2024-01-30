@@ -28,6 +28,8 @@ Route::group([], function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{profile}', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/removeProfile/{profile}', [ProfileController::class, 'removeProfile'])->name('profile.removeProfile');
+    Route::put('/profile/updatePassword/{profile}', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // category route
