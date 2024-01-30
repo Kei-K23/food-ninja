@@ -67,6 +67,21 @@ class ProfileController extends Controller
         return back()->with('success', 'Profile successfully updated');
     }
 
+    // remove profile image
+    public function removeProfile(Request $request, User $profile)
+    {
+        // Check if the authenticated user is authorized to update the profile
+        $isAuthUser = Auth::user()->id == $profile->id;
+
+        if (!$isAuthUser) {
+            return back()->with('error', 'Unauthorized user!');
+        }
+
+        $profile->update(['image_url' => null]);
+
+        return back()->with('success', 'Profile successfully updated');
+    }
+
     /**
      * Delete the user's account.
      */
