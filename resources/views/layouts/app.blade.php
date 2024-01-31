@@ -183,9 +183,15 @@ $path_array = explode('/', $url_path);
     <script>
         const latitudeInput = document.querySelector('#latitude-input');
         const longitudeInput = document.querySelector('#longitude-input');
-        // Define default center coordinates
-        let defaultCenter = {!! Auth::check() ? '[' . Auth::user()->longitude . ', ' . Auth::user()->latitude . ']' : '[96.1951, 16.8661]' !!};
 
+        // Define default center coordinates
+        let defaultCenter;
+
+        @if (Auth::check() && Auth::user()->longitude !== null && Auth::user()->latitude !== null)
+            defaultCenter = [{{ Auth::user()->longitude }}, {{ Auth::user()->latitude }}];
+        @else
+            defaultCenter = [96.1951, 16.8661];
+        @endif
 
         let baseUrl = "{{ asset('storage/images/') }}/";
         let userImageUrl = "{{ Auth::check() ? addslashes(Auth::user()->image_url) : '' }}";
