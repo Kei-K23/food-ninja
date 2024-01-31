@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -50,7 +51,7 @@ class ProfileController extends Controller
         $isAuthUser = Auth::user()->id == $profile->id;
 
         if (!$isAuthUser) {
-            return back()->with('error', 'Unauthorized user!');
+            return back()->with('auth-error', 'Unauthorized user!');
         }
 
         // Check if a new image has been uploaded
@@ -76,7 +77,7 @@ class ProfileController extends Controller
         $isAuthUser = Auth::user()->id == $profile->id;
 
         if (!$isAuthUser) {
-            return back()->with('error', 'Unauthorized user!');
+            return back()->with('auth-error', 'Unauthorized user!');
         }
 
         $profile->update(['image_url' => null]);
@@ -94,7 +95,7 @@ class ProfileController extends Controller
         $isAuthUser = Auth::user()->id == $profile->id;
 
         if (!$isAuthUser) {
-            return back()->with('error', 'Unauthorized user!');
+            return back()->with('auth-error', 'Unauthorized user!');
         }
 
         $profile->update([
@@ -113,19 +114,21 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
         $user = $request->user();
+        $authUser = Auth::user();
 
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        if ($user->email === $authUser->email) {
+            if ($user->password === $authUser->password) {
+                Auth::logout();
+                $user->delete();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect('/');
+            } else {
+                return back()->with('auth-error', 'Incorrect password!');
+            }
+        } else {
+            return back()->with('auth-error', 'Unauthorized user!');
+        }
     }
 }

@@ -2,6 +2,17 @@
 
 @section('content')
 <div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if(session()->has('auth-error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('auth-error') }}
+            </div>
+            @endif
+        </div>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -66,10 +77,6 @@
                 <div class="card-header">
                     {{ 'Edit ' . $user->name . "'s" . ' profile' }}
                 </div>
-                {{-- @if ($errors->any())
-                {!! implode('', $errors->all("<div class='alert alert-danger ' role='alert'><i
-                        class='fa-solid fa-circle-exclamation'></i> :message</div>")) !!}
-                @endif --}}
                 @if (session('success'))
                 <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i>
                     {{ session('success') }}
