@@ -6,7 +6,6 @@ $url_path = ltrim($url_path, '/');
 
 // Split the path into an array
 $path_array = explode('/', $url_path);
-
 @endphp
 
 <!doctype html>
@@ -182,9 +181,33 @@ $path_array = explode('/', $url_path);
     <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.1/maps/maps-web.min.js'></script>
     <script src="{{ asset('js/responsive-map.js') }}"></script>
     <script>
+        const latitudeInput = document.querySelector('#latitude-input');
+        const longitudeInput = document.querySelector('#longitude-input');
         // Define default center coordinates
-        let defaultCenter = [96.1951, 16.8661];
+        let defaultCenter = {!! Auth::check() ? '[' . Auth::user()->longitude . ', ' . Auth::user()->latitude . ']' : '[96.1951, 16.8661]' !!};
+
+
+        let baseUrl = "{{ asset('storage/images/') }}/";
+        let userImageUrl = "{{ Auth::check() ? addslashes(Auth::user()->image_url) : '' }}";
+
+        if (!userImageUrl) {
+            userImageUrl = "{{ asset('images/profile-picture.png') }}"; // Default image
+        } else {
+            userImageUrl = baseUrl + userImageUrl; // Append base URL if provided
+        }
+
+        let border = document.createElement('div');
+        border.className = "marker-border";
+
+        let icon = document.createElement('div');
+        icon.className = 'marker-icon';
+        icon.style.backgroundImage = `url('${userImageUrl}')`;
+
+        border.appendChild(icon);
+
         let defaultMarker = null; // Variable to hold the default marker
+        let previousClickMarker = null;
+        const size = 50;
 
         const map = tt.map({
             key: "{{ config('services.tomtom_map_api_key') }}",
@@ -199,22 +222,33 @@ $path_array = explode('/', $url_path);
 
         // Add default marker on load
         map.on('load', () => {
-            defaultMarker = new tt.Marker().setLngLat(defaultCenter).addTo(map);
+            defaultMarker = new tt.Marker({
+                element: border
+            }).setLngLat(defaultCenter).addTo(map);
         });
 
         // Listen for click events on the map
         map.on('click', (event) => {
+
             // Get the coordinates of the clicked location
             const clickedCoordinates = [event.lngLat.lng, event.lngLat.lat];
-
+            latitudeInput.value = event.lngLat.lat;
+            longitudeInput.value = event.lngLat.lng;
             // Remove the default marker if it exists
             if (defaultMarker) {
                 defaultMarker.remove();
                 defaultMarker = null; // Reset the default marker variable
             }
 
+            if (previousClickMarker) {
+                previousClickMarker.remove();
+                previousClickMarker = null;
+            }
+
             // Add a new marker at the clicked location
-            new tt.Marker().setLngLat(clickedCoordinates).addTo(map);
+            previousClickMarker = new tt.Marker({
+                element: border
+            }).setLngLat(clickedCoordinates).addTo(map);
         });
     </script>
 </body>

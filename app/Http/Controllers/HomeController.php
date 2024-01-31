@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         $categories = Category::all()->take(8);
         $menus = Menu::inRandomOrder()->take(6)->get();
-        $tomtomMapApiKey = config('services.tomtom_map_api_key');
-        return view('home.index', ['categories' => $categories, 'menus' => $menus, 'tomtomMapApiKey' => $tomtomMapApiKey]);
+
+        return view('home.index', ['categories' => $categories, 'menus' => $menus]);
     }
 }

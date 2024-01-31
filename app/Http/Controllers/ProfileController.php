@@ -41,7 +41,9 @@ class ProfileController extends Controller
             'name' => ['nullable', 'string', 'min:3'],
             'address' => ['nullable', 'string', 'min:5'],
             'image_url' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'phone_number' => ['nullable', 'string']
+            'phone_number' => ['nullable', 'string'],
+            'longitude' => ['nullable', 'string'],
+            'latitude' => ['nullable', 'string'],
         ]);
 
 

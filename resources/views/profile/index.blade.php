@@ -104,11 +104,22 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Address</label>
+                            <label class="col-sm-3 col-form-label">Longitude</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="address" placeholder="Address"
-                                    rows="3">{{ $user->address }}</textarea>
-                                @error('address')
+                                <input id="longitude-input" type="text" readonly class="form-control" name="longitude"
+                                    placeholder="Longitude" value="{{ $user->longitude }}" />
+                                @error('longitude')
+                                <span class="text-danger  ">*{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Latitude</label>
+                            <div class="col-sm-9">
+                                <input id="latitude-input" type="text" readonly class="form-control" name="latitude"
+                                    placeholder="Latitude" value="{{ $user->latitude }}" />
+                                @error('latitude')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
