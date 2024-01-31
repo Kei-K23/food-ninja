@@ -11,12 +11,14 @@
                 </div>
                 <h2 class="text-success ">{{ $menu->price }} $</h2>
             </div>
-            <a href="{{ route('restaurant.show', ['restaurant' => $menu->restaurant->id ]) }}"
+            <a href="{{ route('restaurant.show', ['restaurant' => $menu->restaurant->id]) }}"
                 class="card-subtitle mb-2 text-body-secondary text-truncate ">{{ $menu->restaurant->name }}</a>
             <p class="mt-3">
                 {{ $menu->description }}
             </p>
-            <button class="btn btn-primary ">
+            <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}"
+                data-menu-name="{{ $menu->name }}" data-menu-image="{{ $menu->image_url }}"
+                data-menu-price="{{ $menu->price }}">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Add to Cart</button>
         </div>
@@ -42,7 +44,7 @@
                     {{ $menu->description }}
                 </p>
                 <a href="#" class="btn btn-primary">Add To Cart</a>
-                <a href="{{ route('menu.show' , ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
+                <a href="{{ route('menu.show', ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
                     More</a>
             </div>
         </div>

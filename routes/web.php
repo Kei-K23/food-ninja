@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\ShoppingCartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,3 +50,6 @@ Route::group([], function () {
     Route::get('/restaurant', [RestaurantController::class, 'index'])->name('restaurant');
     Route::get('/restaurant/{restaurant}', [RestaurantController::class, 'show'])->name('restaurant.show');
 });
+
+// shopping cart route
+Route::get('/shopping-cart', [ShoppingCartController::class, 'index'])->name('shopping-cart');

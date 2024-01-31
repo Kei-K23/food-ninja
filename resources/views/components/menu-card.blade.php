@@ -7,14 +7,16 @@
                 <h5 class="card-title">{{ $menu->name }}</h5>
                 <h5 class="card-title">{{ $menu->price }} $</h5>
             </div>
-            <a href="{{ route('restaurant.show', ['restaurant' => $menu->restaurant->id ]) }}"
+            <a href="{{ route('restaurant.show', ['restaurant' => $menu->restaurant->id]) }}"
                 class="card-subtitle mb-2 text-body-secondary text-truncate ">{{ $menu->restaurant->name }}</a>
             <p class="card-text truncate-paragraph mt-3 ">
                 {{ $menu->description }}
             </p>
-            <a href="#" class="btn btn-primary">Add To Cart</a>
-            <a href="{{ route('menu.show' , ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
-                More</a>
+            <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}"
+                data-menu-name="{{ $menu->name }}" data-menu-image="{{ $menu->image_url }}"
+                data-menu-price="{{ $menu->price }}">Add To Cart</button>
+            <button href="{{ route('menu.show', ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
+                More</button>
         </div>
     </div>
 </div>

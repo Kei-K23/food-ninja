@@ -84,6 +84,14 @@ $path_array = explode('/', $url_path);
                             <a class="{{ $path_array[0] == 'restaurant' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('restaurant') }}">{{ __('Restaurant') }} </a>
                         </li>
+                        <li class="nav-item position-relative">
+                            <a class="{{ $path_array[0] == 'shopping-cart' ? 'nav-link active text-primary' : 'nav-link' }}"
+                                href="{{ route('shopping-cart') }}"><i class="fa-solid fa-cart-shopping"></i> </a>
+
+                            <span style="top: 0.3rem" id="shopping-cart-badge"
+                                class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
+                            </span>
+                        </li>
 
                         @guest
                         @if (Route::has('login'))
@@ -223,18 +231,18 @@ $path_array = explode('/', $url_path);
         });
 
         // Add controls
-        map.addControl(new tt.FullscreenControl());
-        map.addControl(new tt.NavigationControl());
+        map?.addControl(new tt.FullscreenControl());
+        map?.addControl(new tt.NavigationControl());
 
         // Add default marker on load
-        map.on('load', () => {
+        map?.on('load', () => {
             defaultMarker = new tt.Marker({
                 element: border
             }).setLngLat(defaultCenter).addTo(map);
         });
 
         // Listen for click events on the map
-        map.on('click', (event) => {
+        map?.on('click', (event) => {
 
             // Get the coordinates of the clicked location
             const clickedCoordinates = [event.lngLat.lng, event.lngLat.lat];
@@ -256,6 +264,85 @@ $path_array = explode('/', $url_path);
                 element: border
             }).setLngLat(clickedCoordinates).addTo(map);
         });
+    </script>
+
+    {{-- shopping cart --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userId = "{{ Auth::check() ? Auth::user()->id : '' }}";
+            let cart = JSON.parse(localStorage.getItem('food-ninja-cart')) || [];
+            document.querySelector('#shopping-cart-badge').textContent = cart.length;
+
+            cart.map(menu => {
+                createListItem(menu)
+            });
+
+            // add item
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+
+                    const menuId = button.dataset.menuId;
+
+                    addToCart(menuId, userId);
+                });
+            });
+
+            // remove item
+            document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const itemId = button.dataset.itemId;
+                    removeFromCart(itemId);
+                });
+            });
+        })
+
+        function addToCart(menuId, userId) {
+
+            fetch(`/api/v1/shopping-cart`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        menu_id: menuId,
+                        user_id: userId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response data, e.g., display a message or update the UI
+                    console.log('add to shopping cart');
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function removeFromCart(itemId) {
+            // Retrieve existing cart items from localStorage or initialize an empty array
+            let cart = JSON.parse(localStorage.getItem('food-ninja-cart')) || [];
+
+            // Remove the item with the specified itemId from the cart
+            cart = cart.filter(item => item.id !== itemId);
+
+            // Store the updated cart in localStorage
+            localStorage.setItem('food-ninja-cart', JSON.stringify(cart));
+
+            console.log('Item removed from cart:', itemId);
+        }
+
+        function createListItem(menu) {
+            // Set button attributes
+            const button = document.createElement('button');
+            button.setAttribute('type', 'button');
+            button.classList.add('list-group-item', 'list-group-item-action'); // Add classes
+            // Set button text
+
+            button.textContent = menu.name;
+            document.querySelector('#shopping-cart-lists')?.appendChild(button);
+        }
     </script>
 </body>
 

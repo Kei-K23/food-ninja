@@ -27,6 +27,11 @@ class Menu extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function shoppingCarts(): HasMany
+    {
+        return $this->hasMany(ShoppingCart::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search'] ?? false) {
