@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailableName;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -50,10 +53,13 @@ class OrderController extends Controller
             ]);
         }
 
+        $user = Auth::user();
+
         // Clear the shopping cart after creating the order
         ShoppingCart::where('user_id', $validatedData['user_id'])->delete();
 
-        return back()->with('success', 'Your purchase successful!');
+        Mail::to($user->email)->send(new MailableName($order));
+        return back()->with('success', 'Your purchase successful. We sent an success email for you.');
     }
 
     public function show(Order $order): View
