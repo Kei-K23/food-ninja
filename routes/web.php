@@ -64,4 +64,5 @@ Route::group([], function () {
 Route::group([], function () {
     Route::get('/order', [OrderController::class, 'index'])->name('order');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
 });

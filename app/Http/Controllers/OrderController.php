@@ -55,4 +55,9 @@ class OrderController extends Controller
 
         return back()->with('success', 'Your purchase successful!');
     }
+
+    public function show(Order $order): View
+    {
+        return view('order.show', ['order' => $order]);
+    }
 }

@@ -15,12 +15,13 @@
                                 <h5>Order ID: {{ $order->id }}</h5>
                                 <h6 class="text-muted">Total item: {{ $order->total_item }}</h6>
                                 <h6 class="text-muted">Total quantity: {{ $order->total_quantity }}</h6>
-                                <h6 class="text-muted">Total item: {{ $order->total_price }}</h6>
+                                <h6 class="text-muted">Total price: {{ $order->total_price }} $</h6>
                             </div>
                             <div>
                                 <h6 class="text-muted">{{ \Carbon\Carbon::parse($order->created_at)->diffForHumans()
                                     }}</h6>
-                                <a href="#" class="btn btn-primary">View detail</a>
+                                <a href="{{ route('order.show', ['order' => $order->id]) }}"
+                                    class="btn btn-primary">View detail</a>
                             </div>
                         </div>
                         @endforeach
