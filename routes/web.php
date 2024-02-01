@@ -6,6 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShoppingCartController;
 use Illuminate\Support\Facades\Auth;
@@ -70,3 +71,7 @@ Route::group([], function () {
 
 // search route
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+Route::group([], function () {
+    Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+});

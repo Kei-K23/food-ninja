@@ -14,8 +14,8 @@
             </p>
             <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}" data-is-item-in-cart="{{ Auth::check() && Auth::user()->shoppingCarts->where('menu_id', $menu->id)->count() > 0 ? 'true'
                 : 'false' }}">Add To Cart</button>
-            <button href="{{ route('menu.show', ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
-                More</button>
+            <a href="{{ route('menu.show', ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
+                More</a>
         </div>
     </div>
 </div>

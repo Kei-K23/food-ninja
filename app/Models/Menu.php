@@ -32,10 +32,16 @@ class Menu extends Model
         return $this->hasMany(ShoppingCart::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         if ($filters['term'] ?? false) {
             $query->where('name', 'like', '%' . $filters['term'] . '%');
         }
+        $query->orderBy('created_at', 'desc');
     }
 }
