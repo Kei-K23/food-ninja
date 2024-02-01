@@ -34,8 +34,8 @@ class Menu extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        if ($filters['search'] ?? false) {
-            $query->where('name', 'like', '%' . $filters['search'] . '%');
+        if ($filters['term'] ?? false) {
+            $query->where('name', 'like', '%' . $filters['term'] . '%');
         }
     }
 }

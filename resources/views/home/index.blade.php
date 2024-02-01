@@ -7,8 +7,8 @@
             <h3 class="fs-5 fw-lighter">Effciently Connecting People</h3>
             <h1 class="fs-1 text-uppercase ">We Provide Super <span class="text-primary">Fast</span> Deliver
                 Service</h1>
-            <form class="mt-2">
-                <input type="text" class="form-control" name="search" placeholder="Search your foods...">
+            <form class="mt-2" action="{{ route('search') }}">
+                <input type="text" class="form-control" name="term" placeholder="Search your foods...">
             </form>
         </div>
         <div>
