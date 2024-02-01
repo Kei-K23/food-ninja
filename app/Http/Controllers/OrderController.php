@@ -36,6 +36,8 @@ class OrderController extends Controller
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_id' => $cartItem->menu_id,
+                'quantity' => $cartItem->quantity,
+                'unit_price' => $cartItem->menu->price
             ]);
         }
 
