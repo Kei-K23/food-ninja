@@ -135,6 +135,14 @@ $path_array = explode('/', $url_path);
         <main class="py-4">
             @yield('content')
         </main>
+        {{-- toast element --}}
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="toast-body-ele" class="toast-body">
+
+                </div>
+            </div>
+        </div>
         <footer class="border-top-1  w-100 ">
             <div class="my-4 d-flex justify-content-between align-items-center w-100  container">
                 <div>
@@ -314,13 +322,25 @@ $path_array = explode('/', $url_path);
                     // update the count in client site
                     document.querySelector('#shopping-cart-badge').textContent = `${+document.querySelector('#shopping-cart-badge').textContent + 1}`;
 
+                    // disabled the button that already added to the cart
                     const elementsWithDataAttribute = document.querySelector(`[data-menu-id="${menuId}"]`);
-
                     elementsWithDataAttribute.setAttribute('data-is-item-in-cart', 'true');
                     elementsWithDataAttribute.disabled = 'true';
+
+                    // show bootstrap toast
+                    const toast = document.getElementById('liveToast');
+                    const toastBodyEle = document.getElementById('toast-body-ele');
+                    toastBodyEle.textContent = 'Item added to your shopping cart';
+                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+                    toastBootstrap.show();
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    // show bootstrap toast
+                    const toast = document.getElementById('liveToast');
+                    const toastBodyEle = document.getElementById('toast-body-ele');
+                    toastBodyEle.textContent = 'Something went wrong';
+                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+                    toastBootstrap.show();
                 });
         }
 
