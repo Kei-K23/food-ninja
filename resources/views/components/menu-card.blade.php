@@ -12,9 +12,8 @@
             <p class="card-text truncate-paragraph mt-3 ">
                 {{ $menu->description }}
             </p>
-            <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}"
-                data-menu-name="{{ $menu->name }}" data-menu-image="{{ $menu->image_url }}"
-                data-menu-price="{{ $menu->price }}">Add To Cart</button>
+            <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}" data-is-item-in-cart="{{ Auth::check() && Auth::user()->shoppingCarts->where('menu_id', $menu->id)->count() > 0 ? 'true'
+                : 'false' }}">Add To Cart</button>
             <button href="{{ route('menu.show', ['menu' => $menu->id]) }}" class="btn btn-secondary ">See
                 More</button>
         </div>

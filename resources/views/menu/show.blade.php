@@ -16,9 +16,7 @@
             <p class="mt-3">
                 {{ $menu->description }}
             </p>
-            <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}"
-                data-menu-name="{{ $menu->name }}" data-menu-image="{{ $menu->image_url }}"
-                data-menu-price="{{ $menu->price }}">
+            <button class="btn btn-primary add-to-cart-btn" data-menu-id="{{ $menu->id }}">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Add to Cart</button>
         </div>

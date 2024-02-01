@@ -270,19 +270,16 @@ $path_array = explode('/', $url_path);
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const userId = "{{ Auth::check() ? Auth::user()->id : '' }}";
-            let cart = JSON.parse(localStorage.getItem('food-ninja-cart')) || [];
-            document.querySelector('#shopping-cart-badge').textContent = cart.length;
+            let cartItemCount = "{{ Auth::check() ? Auth::user()->shoppingCarts->count() : 0 }}";
 
-            cart.map(menu => {
-                createListItem(menu)
-            });
+            document.querySelector('#shopping-cart-badge').textContent = cartItemCount;
+
 
             // add item
             document.querySelectorAll('.add-to-cart-btn').forEach(button => {
                 button.addEventListener('click', function(e) {
 
                     const menuId = button.dataset.menuId;
-
                     addToCart(menuId, userId);
                 });
             });
@@ -296,7 +293,7 @@ $path_array = explode('/', $url_path);
             });
         })
 
-        function addToCart(menuId, userId) {
+        function addToCart(menuId, userId, e) {
 
             fetch(`/api/v1/shopping-cart`, {
                     method: 'POST',
@@ -314,6 +311,13 @@ $path_array = explode('/', $url_path);
                     // Handle the response data, e.g., display a message or update the UI
                     console.log('add to shopping cart');
                     console.log(data);
+                    // update the count in client site
+                    document.querySelector('#shopping-cart-badge').textContent = `${+document.querySelector('#shopping-cart-badge').textContent + 1}`;
+
+                    const elementsWithDataAttribute = document.querySelector(`[data-menu-id="${menuId}"]`);
+
+                    elementsWithDataAttribute.setAttribute('data-is-item-in-cart', 'true');
+                    elementsWithDataAttribute.disabled = 'true';
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -344,6 +348,7 @@ $path_array = explode('/', $url_path);
             document.querySelector('#shopping-cart-lists')?.appendChild(button);
         }
     </script>
+    @stack('scripts')
 </body>
 
 </html>

@@ -13,3 +13,19 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+            // Loop through each add-to-cart button
+            $('.add-to-cart-btn').each(function() {
+                const isItemInCart = $(this).data('is-item-in-cart');
+
+                // Disable button if the item is already in the cart
+                if (isItemInCart) {
+                    $(this).prop('disabled', true);
+                }
+            });
+        });
+</script>
+@endpush

@@ -22,6 +22,12 @@ class ShoppingCartApiController extends Controller
         $user_id = $request->user_id;
         $menu_id = $request->menu_id;
 
+        $existingItem = ShoppingCart::where('user_id', $user_id)->where('menu_id', $menu_id)->first();
+
+        if ($existingItem) {
+            return response()->json(['message' => 'Item already exist in your shopping cart!'], 422);
+        }
+
         return new ShoppingCartResource(ShoppingCart::create([
             'user_id' => $user_id,
             'menu_id' => $menu_id
