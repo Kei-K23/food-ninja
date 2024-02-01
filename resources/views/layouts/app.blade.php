@@ -84,6 +84,7 @@ $path_array = explode('/', $url_path);
                             <a class="{{ $path_array[0] == 'restaurant' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('restaurant') }}">{{ __('Restaurant') }} </a>
                         </li>
+                        @auth
                         <li class="nav-item position-relative">
                             <a class="{{ $path_array[0] == 'shopping-cart' ? 'nav-link active text-primary' : 'nav-link' }}"
                                 href="{{ route('shopping-cart') }}"><i class="fa-solid fa-cart-shopping"></i> </a>
@@ -92,6 +93,7 @@ $path_array = explode('/', $url_path);
                                 class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
                             </span>
                         </li>
+                        @endauth
 
                         @guest
                         @if (Route::has('login'))
@@ -149,7 +151,7 @@ $path_array = explode('/', $url_path);
                     <a href="{{ url('/') }}" class="text-primary fs-2 link-style-hide fw-bolder ">{{ config('app.name',
                         'Laravel') }}</a>
                     <p class="text-muted ">Food for you</p>
-                    <p class="text-center ">CopyRight© {{ date('Y') }} Food-Ninja. All rights reserved.</p>
+                    <p class="w-50 ">CopyRight© {{ date('Y') }} Food-Ninja. All rights reserved.</p>
                     <a class="link-style-hide " href="https://github.com/Kei-K23" target="__blank">Created with
                         💙
                         by kei-k </a>

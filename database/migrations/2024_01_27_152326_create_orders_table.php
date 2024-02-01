@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->date('order_date')->default(now());
-            $table->integer('total_amount');
-            $table->text('delivery_address');
-            $table->foreignId('restaurant_id')->references('id')->on('restaurants')->cascadeOnDelete();
+            $table->integer('total_item');
+            $table->integer('total_quantity');
+            $table->integer('total_price');
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

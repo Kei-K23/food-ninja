@@ -3,8 +3,17 @@
 
 @section('content')
 <div class="container">
+    @if (session('success'))
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-8 col-md-11 col-12 ">
+            <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i>
+                {{ session('success') }}
+            </div>
+        </div>
+    </div>
+    @endif
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-11 col-12 ">
             <div class="card">
                 <div class="card-header">{{ $user->name . "'s" . ' Shopping cart' }}</div>
 
@@ -29,7 +38,7 @@
                     <h5 class="card-title">Total price: <b>{{ $totalPrice }}</b></h5>
                     <div id="shopping-cart-lists" class="list-group">
                         @foreach ($carts as $cart)
-                        <div class="list-group-item d-flex justify-content-between ">
+                        <div class="list-group-item d-flex flex-column flex-md-row  justify-content-between gap-4 ">
                             <div class="d-flex gap-3">
                                 <img style="width: 150px; height: 100px" class="rounded-3 "
                                     src="{{ asset('images/' . $cart->menu->image_url) }}" alt="{{ $cart->menu->name }}">
@@ -55,6 +64,18 @@
                         </div>
                         @endforeach
                     </div>
+
+                    @if ($carts->count() > 0)
+                    <form action="{{ route('order.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="total_item" value="{{ $carts->count() }}">
+                        <input type="hidden" name="total_quantity" value="{{ $totalQuantity }}">
+                        <input type="hidden" name="total_price" value="{{ $totalPrice }}">
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                        <button class="btn btn-primary mt-4"><i class="fa-solid fa-money-check"></i>
+                            Purchase</button>
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>

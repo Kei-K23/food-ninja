@@ -10,15 +10,9 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-
     public function menus(): HasMany
     {
         return $this->hasMany(Menu::class);
-    }
-
-    public function orders(): HasMany
-    {
-        return $this->hasMany(Order::class);
     }
 
     public function scopeFilter($query, array $filters)

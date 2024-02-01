@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ShoppingCartController;
@@ -57,4 +58,9 @@ Route::group([], function () {
     Route::post('/shopping-cart/increment', [ShoppingCartController::class, 'increment'])->name('shopping-cart.increment');
     Route::post('/shopping-cart/decrement', [ShoppingCartController::class, 'decrement'])->name('shopping-cart.decrement');
     Route::delete('/shopping-cart/delete/{id}', [ShoppingCartController::class, 'destroy'])->name('shopping-cart.destroy');
+});
+
+// order route
+Route::group([], function () {
+    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 });

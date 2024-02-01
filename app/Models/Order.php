@@ -11,14 +11,16 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'total_item',
+        'total_quantity',
+        'total_price',
+        'user_id'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function restaurant(): BelongsTo
-    {
-        return $this->belongsTo(Restaurant::class);
     }
 
     public function orderItems(): HasMany
