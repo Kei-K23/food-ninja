@@ -95,6 +95,13 @@ $path_array = explode('/', $url_path);
                         </li>
                         @endauth
 
+                        @auth
+                        <li class="nav-item ">
+                            <a class="{{ $path_array[0] == 'order' ? 'nav-link active text-primary' : 'nav-link' }}"
+                                href="{{ route('order') }}">{{ __('Orders') }} </a>
+                        </li>
+                        @endauth
+
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">

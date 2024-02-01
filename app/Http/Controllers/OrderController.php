@@ -6,9 +6,18 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
+
+    public function index(Request $request): View
+    {
+        $user = $request->user();
+        $orders = $user->orders;
+
+        return view('order.index', ['user' => $user, 'orders' => $orders]);
+    }
 
     public function store(Request $request)
     {
