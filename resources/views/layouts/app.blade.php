@@ -320,7 +320,8 @@ $path_array = explode('/', $url_path);
                     console.log('add to shopping cart');
                     console.log(data);
                     // update the count in client site
-                    document.querySelector('#shopping-cart-badge').textContent = `${+document.querySelector('#shopping-cart-badge').textContent + 1}`;
+                    document.querySelector('#shopping-cart-badge').textContent =
+                        `${+document.querySelector('#shopping-cart-badge').textContent + 1}`;
 
                     // disabled the button that already added to the cart
                     const elementsWithDataAttribute = document.querySelector(`[data-menu-id="${menuId}"]`);

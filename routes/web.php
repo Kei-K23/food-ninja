@@ -52,4 +52,9 @@ Route::group([], function () {
 });
 
 // shopping cart route
-Route::get('/shopping-cart', [ShoppingCartController::class, 'index'])->name('shopping-cart');
+Route::group([], function () {
+    Route::get('/shopping-cart', [ShoppingCartController::class, 'index'])->name('shopping-cart');
+    Route::post('/shopping-cart/increment', [ShoppingCartController::class, 'increment'])->name('shopping-cart.increment');
+    Route::post('/shopping-cart/decrement', [ShoppingCartController::class, 'decrement'])->name('shopping-cart.decrement');
+    Route::delete('/shopping-cart/delete/{id}', [ShoppingCartController::class, 'destroy'])->name('shopping-cart.destroy');
+});
