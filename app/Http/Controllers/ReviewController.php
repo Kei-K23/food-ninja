@@ -14,7 +14,12 @@ class ReviewController extends Controller
             'content' => ['string', 'required', 'min:3'],
             'menu_id' => ['required']
         ]);
+
         $user = $request->user();
+
+        if (!$user) {
+            return back()->with('error', 'Unauthorized user!');
+        }
 
         Review::create([
             'content' => $validateData['content'],
@@ -23,6 +28,29 @@ class ReviewController extends Controller
         ]);
 
         return back()->with('success', 'Reviewed the food!');
+    }
+
+
+    public function update(Request $request, Review $review)
+    {
+
+        $validateData = $request->validate([
+            'content' => ['string', 'required', 'min:3']
+        ]);
+
+        $user = $request->user();
+
+        if (!$user) {
+            return back()->with('error', 'Unauthorized user!');
+        }
+
+        $isAuth = $user->id === $review->user_id;
+        if (!$isAuth) {
+            return back()->with('error', 'Could not delete the review');
+        }
+
+        $review->update($validateData);
+        return back()->with('success', 'Successfully edited the review');
     }
 
     public function destroy(Request $request, Review $review)

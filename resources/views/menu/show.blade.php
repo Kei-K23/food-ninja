@@ -50,17 +50,28 @@
     </div>
 
     <h4 class="mt-5">Reviews</h4>
+    @auth
     <form method="POST" class="mt-2 mb-4 " action="{{ route('review.store') }}">
         @csrf
         <input type="hidden" name="menu_id" value="{{ $menu->id }}">
         <textarea class="form-control" name="content" placeholder="Review about the food..."></textarea>
         <button type="submit" class="mt-2 btn btn-primary ">Review</button>
     </form>
+    @endauth
     @if (session('success'))
     <div class="row justify-content-center">
         <div class="col-12 ">
             <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i>
                 {{ session('success') }}
+            </div>
+        </div>
+    </div>
+    @endif
+    @if (session('error'))
+    <div class="row justify-content-center">
+        <div class="col-12 ">
+            <div class='alert alert-danger ' role='alert'><i class="fa-regular fa-square-check"></i>
+                {{ session('error') }}
             </div>
         </div>
     </div>
@@ -95,7 +106,8 @@
                 {{ $review->content }}
             </p>
             <!-- Edit Review Form -->
-            <form id="{{ 'edit-review-form-' . $review->id }}" class="edit-review-form d-none mt-2 " method="POST">
+            <form action="{{ route('review.update', ['review' => $review->id]) }}"
+                id="{{ 'edit-review-form-' . $review->id }}" class="edit-review-form d-none mt-2 " method="POST">
                 @csrf
                 @method('PUT')
                 <textarea class="form-control" name="content">{{ $review->content }}</textarea>
@@ -104,6 +116,8 @@
                     <button type="button" class="btn close-edit-form">Cancel</button>
                 </div>
             </form>
+            @auth
+            @if ($review->user_id == Auth::user()->id)
             <div id="{{ 'review-actions-btns-' . $review->id }}"
                 class="d-flex align-items-center  gap-2 review-actions-btns">
                 <button class="btn btn-secondary edit-review-btn" data-review-id="{{ $review->id }}">
@@ -117,6 +131,8 @@
                     </button>
                 </form>
             </div>
+            @endif
+            @endauth
         </div>
         @endforeach
     </div>
@@ -144,11 +160,11 @@
                 $('#review-actions-btns-' + reviewId).addClass('d-none');
             });
 
-            $('.close-edit-form').click(function () {
-               // reset other component into their previous state
-            $('.edit-review-form').addClass('d-none');
-            $('.review-content').removeClass('d-none');
-            $('.review-actions-btns').removeClass('d-none');
+            $('.close-edit-form').click(function() {
+                // reset other component into their previous state
+                $('.edit-review-form').addClass('d-none');
+                $('.review-content').removeClass('d-none');
+                $('.review-actions-btns').removeClass('d-none');
             });
         });
 </script>
