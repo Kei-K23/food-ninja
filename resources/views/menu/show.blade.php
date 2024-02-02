@@ -56,6 +56,15 @@
         <textarea class="form-control" name="content" placeholder="Review about the food..."></textarea>
         <button type="submit" class="mt-2 btn btn-primary ">Review</button>
     </form>
+    @if (session('success'))
+    <div class="row justify-content-center">
+        <div class="col-12 ">
+            <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i>
+                {{ session('success') }}
+            </div>
+        </div>
+    </div>
+    @endif
     @if ($menu->reviews->count())
     <div id="shopping-cart-lists" class="list-group">
         @php
@@ -65,7 +74,7 @@
         @foreach ($sortedReviews as $review)
         <div class="list-group-item ">
             <div class="d-flex justify-content-between ">
-                <div class="d-flex align-items-center gap-2 ">
+                <div class="d-flex align-items-center gap-2 w-100  ">
                     @if ($review->user->image_url)
                     <img style="width: 45px; height: 45px;" class="rounded-circle "
                         src="{{ asset('storage/images/' . $review->user->image_url) }}" alt="{{ $review->user->name }}">
@@ -73,14 +82,41 @@
                     <img style="width: 45px; height: 45px;" class="rounded-circle "
                         src="{{ asset('images/profile-picture.png') }}" alt="{{ $review->user->name }}">
                     @endif
-                    <h5>{{ $review->user->name }}</h5>
+                    <div class="w-100 d-flex justify-content-between align-items-center ">
+                        <h5>{{ $review->user->name }}</h5>
+                        <h6 class="text-muted">
+                            {{ \Carbon\Carbon::parse($review->created_at)->diffForHumans() }}</h6>
+                    </div>
                 </div>
-                <h6 class="text-muted">{{ \Carbon\Carbon::parse($review->created_at)->diffForHumans()
-                    }}</h6>
+
             </div>
-            <p class="mt-2">
+
+            <p id="{{ 'review-content-' . $review->id }}" class="mt-2 review-content">
                 {{ $review->content }}
             </p>
+            <!-- Edit Review Form -->
+            <form id="{{ 'edit-review-form-' . $review->id }}" class="edit-review-form d-none mt-2 " method="POST">
+                @csrf
+                @method('PUT')
+                <textarea class="form-control" name="content">{{ $review->content }}</textarea>
+                <div class="d-flex align-items-center  gap-2 mt-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn close-edit-form">Cancel</button>
+                </div>
+            </form>
+            <div id="{{ 'review-actions-btns-' . $review->id }}"
+                class="d-flex align-items-center  gap-2 review-actions-btns">
+                <button class="btn btn-secondary edit-review-btn" data-review-id="{{ $review->id }}">
+                    <i class="fa-solid fa-square-pen"></i>
+                </button>
+                <form method="POST" action="{{ route('review.destroy', ['review' => $review]) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger ">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </form>
+            </div>
         </div>
         @endforeach
     </div>
@@ -90,3 +126,30 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // jQuery code to toggle edit review form
+        $(document).ready(function() {
+            $('.edit-review-btn').click(function() {
+                // reset other component into their previous state
+                $('.edit-review-form').addClass('d-none');
+                $('.review-content').removeClass('d-none');
+                $('.review-actions-btns').removeClass('d-none');
+
+                // perform on cliked review component
+                var reviewId = $(this).data('review-id');
+                $('#edit-review-form-' + reviewId).removeClass('d-none');
+                $('#review-content-' + reviewId).addClass('d-none');
+                $('#review-actions-btns-' + reviewId).addClass('d-none');
+            });
+
+            $('.close-edit-form').click(function () {
+               // reset other component into their previous state
+            $('.edit-review-form').addClass('d-none');
+            $('.review-content').removeClass('d-none');
+            $('.review-actions-btns').removeClass('d-none');
+            });
+        });
+</script>
+@endpush

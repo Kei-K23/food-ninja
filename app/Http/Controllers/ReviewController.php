@@ -24,4 +24,15 @@ class ReviewController extends Controller
 
         return back()->with('success', 'Reviewed the food!');
     }
+
+    public function destroy(Request $request, Review $review)
+    {
+        $isAuth = $request->user()->id === $review->user_id;
+        if (!$isAuth) {
+            return back()->with('error', 'Could not delete the review');
+        }
+
+        $review->delete();
+        return back()->with('success', 'Successfully deleted the review');
+    }
 }

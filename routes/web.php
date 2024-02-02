@@ -74,4 +74,5 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::group([], function () {
     Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+    Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
 });
