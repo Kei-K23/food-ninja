@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
@@ -76,4 +78,10 @@ Route::group([], function () {
     Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
     Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
     Route::put('/review/{review}', [ReviewController::class, 'update'])->name('review.update');
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::group([], function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
 });
