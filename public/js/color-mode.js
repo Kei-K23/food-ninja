@@ -21,14 +21,34 @@
             : "light";
     };
 
+    // const setTheme = (theme) => {
+    //     if (
+    //         theme === "auto" &&
+    //         window.matchMedia("(prefers-color-scheme: dark)").matches
+    //     ) {
+    //         document.documentElement.setAttribute("data-bs-theme", "dark");
+    //     } else {
+    //         document.documentElement.setAttribute("data-bs-theme", theme);
+    //     }
+    // };
+
     const setTheme = (theme) => {
+        const navElement = document.getElementById("my-nav");
         if (
             theme === "auto" &&
             window.matchMedia("(prefers-color-scheme: dark)").matches
         ) {
             document.documentElement.setAttribute("data-bs-theme", "dark");
+            navElement.classList.remove("bg-white");
+            navElement.classList.add("bg-dark");
+        } else if (theme === "dark") {
+            document.documentElement.setAttribute("data-bs-theme", "dark");
+            navElement.classList.remove("bg-white");
+            navElement.classList.add("bg-dark");
         } else {
             document.documentElement.setAttribute("data-bs-theme", theme);
+            navElement.classList.remove("bg-dark");
+            navElement.classList.add("bg-white");
         }
     };
 

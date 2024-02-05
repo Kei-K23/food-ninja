@@ -24,6 +24,8 @@ $path_array = explode('/', $url_path);
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -37,15 +39,18 @@ $path_array = explode('/', $url_path);
     <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
     <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.1/maps/maps.css'>
 
-    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/owl.autoplay.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}" defer></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}" defer></script>
+    <script src="{{ asset('js/owl.autoplay.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/color-mode.js') }}" defer></script>
 </head>
 
 <body>
     <div id="app">
-        <nav style="z-index: 10" class="navbar navbar-expand-md navbar-light bg-white shadow-sm position-sticky top-0 ">
+        <nav id="my-nav" style="z-index: 10"
+            class="navbar navbar-expand-md navbar-light  shadow-sm position-sticky   top-0 ">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Food-Ninja') }}
@@ -57,10 +62,6 @@ $path_array = explode('/', $url_path);
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -144,6 +145,55 @@ $path_array = explode('/', $url_path);
         <main class="py-4">
             @yield('content')
         </main>
+
+        <div class="dropdown position-fixed bd-mode-toggle bottom-0 end-0 mb-3 me-3">
+            <button class="btn btn-bd-primary dropdown-toggle d-flex align-items-center py-2" id="bd-theme"
+                type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+                <svg class="bi theme-icon-active my-1" width="1em" height="1em">
+                    <use href="#circle-half"></use>
+                </svg>
+                <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+                <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
+                        aria-pressed="false">
+                        <svg class="bi theme-icon me-2 opacity-50" width="1em" height="1em">
+                            <use href="#sun-fill"></use>
+                        </svg>
+                        Light
+                        <svg class="bi d-none ms-auto" width="1em" height="1em">
+                            <use href="#check2"></use>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                        aria-pressed="false">
+                        <svg class="bi theme-icon me-2 opacity-50" width="1em" height="1em">
+                            <use href="#moon-stars-fill"></use>
+                        </svg>
+                        Dark
+                        <svg class="bi d-none ms-auto" width="1em" height="1em">
+                            <use href="#check2"></use>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center active"
+                        data-bs-theme-value="auto" aria-pressed="true">
+                        <svg class="bi theme-icon me-2 opacity-50" width="1em" height="1em">
+                            <use href="#circle-half"></use>
+                        </svg>
+                        Auto
+                        <svg class="bi d-none ms-auto" width="1em" height="1em">
+                            <use href="#check2"></use>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
         {{-- toast element --}}
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -155,7 +205,8 @@ $path_array = explode('/', $url_path);
         <footer class="border-top-1  w-100 ">
             <div class="my-4 d-flex justify-content-between align-items-center w-100  container">
                 <div>
-                    <a href="{{ url('/') }}" class="text-primary fs-2 link-style-hide fw-bolder ">{{ config('app.name',
+                    <a href="{{ url('/') }}" class="text-primary fs-2 link-style-hide fw-bolder ">{{
+                        config('app.name',
                         'Laravel') }}</a>
                     <p class="text-muted ">Food for you</p>
                     <p class="w-50 ">CopyRight© {{ date('Y') }} Food-Ninja. All rights reserved.</p>
