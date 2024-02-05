@@ -322,7 +322,8 @@ $path_array = explode('/', $url_path);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('order') }}">
+                                    <a class="nav-link d-flex align-items-center gap-2"
+                                        href="{{ route('adminOrder') }}">
                                         <svg class="bi">
                                             <use xlink:href="#file-earmark" />
                                         </svg>

@@ -15,6 +15,11 @@ class Restaurant extends Model
         return $this->hasMany(Menu::class);
     }
 
+    public function user(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search'] ?? false) {

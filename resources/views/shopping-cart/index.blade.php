@@ -35,7 +35,7 @@
                     @endphp
                     @endforeach
 
-                    <h5 class="card-title">Total price: <b>{{ $totalPrice }}</b></h5>
+                    <h5 class="card-title">Total price: <b>{{ $totalPrice }} $</b></h5>
                     <div id="shopping-cart-lists" class="list-group">
                         @foreach ($carts as $cart)
                         <div class="list-group-item d-flex flex-column flex-md-row  justify-content-between gap-4 ">

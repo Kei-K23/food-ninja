@@ -89,7 +89,7 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::group([], function () {
-        Route::get('/order', [AdminOrderController::class, 'index'])->name('order');
+        Route::get('/order', [AdminOrderController::class, 'index'])->name('adminOrder');
     });
 
     Route::group([], function () {

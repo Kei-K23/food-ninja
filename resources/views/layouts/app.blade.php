@@ -40,9 +40,9 @@ $path_array = explode('/', $url_path);
     <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.1/maps/maps.css'>
 
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.7.1.min.js') }}" defer></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }}" defer></script>
-    <script src="{{ asset('js/owl.autoplay.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/owl.autoplay.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/color-mode.js') }}" defer></script>
 </head>

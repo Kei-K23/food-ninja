@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('restaurant_id')->nullable()->references('id')->on('restaurants')->cascadeOnDelete();
             $table->text('image_url')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();

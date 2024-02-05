@@ -7,8 +7,13 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+    }
+
     public function index(): View
     {
-        return view('overview.index');
+        return view('dashboard.index');
     }
 }
