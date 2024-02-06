@@ -115,6 +115,7 @@ $path_array = explode('/', $url_path);
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/bashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dashboard-rtl.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 
@@ -125,7 +126,7 @@ $path_array = explode('/', $url_path);
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
 
     <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-    <script type="text/javascript" src="{{ asset('js/color-mode.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/admin-color-mode.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/dashboard.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
         integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous">
@@ -269,7 +270,8 @@ $path_array = explode('/', $url_path);
         </svg>
 
         <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+                href="{{ route('dashboard') }}">Food-Ninja</a>
 
             <ul class="navbar-nav flex-row d-md-none">
                 <li class="nav-item text-nowrap">
@@ -301,11 +303,11 @@ $path_array = explode('/', $url_path);
         <div class="container-fluid">
             <div class="row">
                 <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-                    <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
-                        aria-labelledby="sidebarMenuLabel">
+                    <div class="myMenuSidebar offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1"
+                        id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="sidebarMenuLabel">
-                                Company name
+                                Food-Ninja
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                 data-bs-target="#sidebarMenu" aria-label="Close"></button>
@@ -313,7 +315,7 @@ $path_array = explode('/', $url_path);
                         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
+                                    <a class="nav-link d-flex align-items-center gap-2 active"
                                         href="{{ route('dashboard') }}">
                                         <svg class="bi">
                                             <use xlink:href="#house-fill" />
@@ -352,7 +354,8 @@ $path_array = explode('/', $url_path);
 
                             <ul class="nav flex-column mb-auto">
                                 <li class="nav-item mb-3 ">
-                                    <a class="text-danger nav-link d-flex align-items-center gap-2" href="#">
+                                    <a class="text-danger nav-link d-flex align-items-center gap-2"
+                                        href="{{ route('home') }}">
                                         <svg class="bi">
                                             <use xlink:href="#door-closed" />
                                         </svg>
@@ -390,6 +393,38 @@ $path_array = explode('/', $url_path);
             </div>
         </footer>
     </div>
+    <script>
+        // Define a callback function to handle intersection changes
+        function handleIntersection(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Element is in the viewport
+                    // Perform your desired effect here
+                    // You can also trigger animations or other effects
+                    console.log("in view");
+                    const overlay = document.querySelector('.modal-backdrop')
+                    if(overlay) {
+                        overlay.remove()
+                    }
+                } else {
+                    // Element is not in the viewport
+                    // Perform cleanup or other actions if needed
+                }
+            });
+        }
+
+        // Create a new Intersection Observer
+        var observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.5
+        });
+        // Select the element you want to observe
+        var targetElement = document.querySelector('.myMenuSidebar');
+
+        // Start observing the target element
+        if (targetElement) {
+            observer.observe(targetElement);
+        }
+    </script>
     @stack('scripts')
 </body>
 

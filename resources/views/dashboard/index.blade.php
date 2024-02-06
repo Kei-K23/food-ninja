@@ -8,7 +8,7 @@
         <h3>{{ $user->name }}</h3>
     </div>
 
-    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+    <canvas class="my-4 w-100" id="lineChart" width="900" height="380"></canvas>
 
     <h2>Order items</h2>
     <div class="table-responsive ">
@@ -43,3 +43,41 @@
     </div>
 </div>
 @endsection
+
+
+@push('scripts')
+<script>
+    const ctx = document.getElementById('lineChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @json($chartData['labels']),
+                datasets: [{
+                    data: @json($chartData['data']),
+                    lineTension: 0,
+                    backgroundColor: "transparent",
+                    borderColor: "#007bff",
+                    borderWidth: 2,
+                    pointBackgroundColor: "#007bff",
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        boxPadding: 3,
+                    },
+                },
+            }
+        });
+
+
+</script>
+@endpush
