@@ -64,6 +64,11 @@
                                 {{ $user->address }}
                             </p>
                             @endif
+                            @if ($user->restaurant)
+                            <a href="{{ route('dashboard') }}" class="text-muted">
+                                Visit to your restaurant
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
