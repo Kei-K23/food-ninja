@@ -9,13 +9,15 @@ use Illuminate\View\Component;
 class MenuCard extends Component
 {
     public $menu;
+    public $showAction;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($menu)
+    public function __construct($menu, $showAction = true)
     {
         $this->menu = $menu;
+        $this->showAction = $showAction;
     }
 
     /**
