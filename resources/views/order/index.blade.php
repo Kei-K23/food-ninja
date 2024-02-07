@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-header">{{ $user->name . "'s" . ' order history' }}</div>
                 <div class="card-body">
+                    @if ($orders->count() > 0)
                     <div id="shopping-cart-lists" class="list-group">
                         @foreach ($orders as $order)
                         <div class="list-group-item d-flex flex-column flex-md-row  justify-content-between gap-4 ">
@@ -26,6 +27,9 @@
                         </div>
                         @endforeach
                     </div>
+                    @else
+                    <p>No order create yet!</p>
+                    @endif
                 </div>
             </div>
         </div>
