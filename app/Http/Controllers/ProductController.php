@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,10 +15,12 @@ class ProductController extends Controller
         $restaurantId = $user->restaurant->id;
         $menus = Menu::where('restaurant_id', $restaurantId)->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('products.index', ['menus' => $menus]);
+        $categories = Category::all();
+
+        return view('products.index', ['menus' => $menus, 'restaurantId' => $restaurantId, 'categories' => $categories]);
     }
 
-    public function show(Request $request, Menu $menu): View
+    public function show(Menu $menu): View
     {
         return view('products.show', ['menu' => $menu]);
     }

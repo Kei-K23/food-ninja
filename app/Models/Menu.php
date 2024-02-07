@@ -10,6 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Menu extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'price',
+        'description',
+        'category_id',
+        'restaurant_id',
+        'image_url'
+    ];
 
     public function category(): BelongsTo
     {

@@ -1,7 +1,15 @@
 <div class="col-12 col-md-6 col-lg-4 my-2 ">
     <div class="card">
-        <img class="card-img-top img-thumbnail " src="{{ asset('images/' . $menu->image_url) }}" alt="{{ $menu->name }}"
+        @if ($menu->image_url && file_exists(public_path('images/' . $menu->image_url)))
+        <img class="card-img-top img-thumbnail" src="{{ asset('images/' . $menu->image_url) }}" alt="{{ $menu->name }}"
             style="width: 100%; height: 220px;">
+        @elseif ($menu->image_url && file_exists(public_path('storage/images/' . $menu->image_url)))
+        <img class="card-img-top img-thumbnail" src="{{ asset('storage/images/' . $menu->image_url) }}"
+            alt="{{ $menu->name }}" style="width: 100%; height: 220px;">
+        @else
+        <img class="card-img-top img-thumbnail" src="{{ asset('images/placeholder.png') }}" alt="{{ $menu->name }}"
+            style="width: 100%; height: 220px;">
+        @endif
         <div class="card-body">
             <div class="d-flex justify-content-between  align-items-center ">
                 <h5 class="card-title">{{ $menu->name }}</h5>

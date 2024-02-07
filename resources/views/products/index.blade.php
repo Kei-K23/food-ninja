@@ -8,41 +8,41 @@
                     Add new product
                 </div>
                 @if (session('success'))
-                <div class='alert alert-success ' role='alert'><i class="fa-regular fa-square-check"></i>
+                <div class='alert alert-success text-center ' role='alert'><i class="fa-regular fa-square-check"></i>
                     {{ session('success') }}
                 </div>
                 @endif
                 <div class="card-body">
-                    <form class="w-px-500 p-3 p-md-3" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('products.store') }}" class="w-px-500 p-3 p-md-3" method="post"
+                        enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control  " name="name" placeholder="Name">
+                                <input type="text" class="form-control" name="name" placeholder="Menu name" required>
                                 @error('name')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
-
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Phone</label>
+                            <label class="col-sm-3 col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="phone_number" placeholder="Phone">
-                                @error('phone_number')
+                                <textarea class="form-control" name="description" placeholder="Description"
+                                    required></textarea>
+                                @error('description')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Longitude</label>
+                            <label class="col-sm-3 col-form-label">Price</label>
                             <div class="col-sm-9">
-                                <input id="longitude-input" type="text" readonly class="form-control" name="longitude"
-                                    placeholder="Longitude" />
-                                @error('longitude')
+                                <input id="longitude-input" type="number" class="form-control" name="price"
+                                    placeholder="Price" required />
+                                @error('price')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
                             </div>
@@ -51,8 +51,12 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Latitude</label>
                             <div class="col-sm-9">
-                                <input id="latitude-input" type="text" readonly class="form-control" name="latitude"
-                                    placeholder="Latitude" />
+                                <select name="category_id" required class="form-select">
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+
+                                </select>
                                 @error('latitude')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
@@ -60,7 +64,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Profile Picture</label>
+                            <label class="col-sm-3 col-form-label">Menu Image</label>
                             <div class="col-sm-9">
                                 <input type="file" class="form-control" name="image_url">
                                 @error('image_url')
@@ -69,10 +73,12 @@
                             </div>
                         </div>
 
+                        <input type="hidden" name="restaurant_id" value="{{$restaurantId}}" />
+
                         <div class="row mb-3">
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-success "><i class="fa-solid fa-pen-to-square"></i>
-                                    Edit</button>
+                                <button type="submit" class="btn btn-success ">
+                                    Add</button>
                             </div>
                         </div>
                     </form>

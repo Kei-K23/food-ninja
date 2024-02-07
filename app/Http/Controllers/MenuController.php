@@ -15,6 +15,32 @@ class MenuController extends Controller
         return view('menu.index', ['menus' => $menu]);
     }
 
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'name' => ['required', 'string', 'min:2'],
+            'price' => ['required', 'numeric'],
+            'description' => ['required', 'string', 'min:5'],
+            'category_id' => ['required'],
+            'restaurant_id' => ['required'],
+            'image_url' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
+        ]);
+
+
+        // Check if a new image has been uploaded
+        if ($request->hasFile('image_url')) {
+            // Store the image in the storage
+            $fileName = time() . '.' . $request->image_url->getClientOriginalExtension(); // Get original extension
+            $request->image_url->storeAs('public/images', $fileName);
+
+            // Update the 'image_url' field with the file name only
+            $validatedData['image_url'] = $fileName;
+        }
+
+        Menu::create($validateData);
+        return back()->with('success', 'Successfully created new menu');
+    }
+
     public function show(Menu $menu): View
     {
         $menus = Menu::where('category_id', $menu->category_id)->inRandomOrder()->take(6)->get();

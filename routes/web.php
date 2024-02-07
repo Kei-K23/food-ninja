@@ -98,6 +98,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group([], function () {
         Route::get('/products', [ProductController::class, 'index'])->name('products');
+        Route::post('/products', [MenuController::class, 'store'])->name('products.store');
         Route::get('/products/{menu}', [ProductController::class, 'show'])->name('products.show');
     });
 
