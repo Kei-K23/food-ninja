@@ -2,10 +2,11 @@
 $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Remove the leading slash if present
-$url_path = ltrim($url_path, '/');
+$url_path = ltrim($url_path, '/admin');
 
 // Split the path into an array
 $path_array = explode('/', $url_path);
+
 @endphp
 
 <!doctype html>
@@ -315,8 +316,9 @@ $path_array = explode('/', $url_path);
                         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2 active"
-                                        href="{{ route('dashboard') }}">
+                                    {{-- TODO: fix dashboard name! Now dashboard is shboard --}}
+                                    <a class="{{ $path_array[0] == 'shboard' ? 'active bg-secondary-subtle text-primary nav-link d-flex align-items-center gap-2' : 'nav-link d-flex align-items-center gap-2' }}"
+                                        class="" href="{{ route('dashboard') }}">
                                         <svg class="bi">
                                             <use xlink:href="#house-fill" />
                                         </svg>
@@ -324,7 +326,7 @@ $path_array = explode('/', $url_path);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2"
+                                    <a class="{{ $path_array[0] == 'order' ? 'active bg-secondary-subtle  text-primary nav-link d-flex align-items-center gap-2' : 'nav-link d-flex align-items-center gap-2' }}"
                                         href="{{ route('adminOrder') }}">
                                         <svg class="bi">
                                             <use xlink:href="#file-earmark" />
@@ -333,7 +335,8 @@ $path_array = explode('/', $url_path);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('products') }}">
+                                    <a class="{{ $path_array[0] == 'products' ? 'active bg-secondary-subtle text-primary nav-link d-flex align-items-center gap-2' : 'nav-link d-flex align-items-center gap-2' }}"
+                                        href="{{ route('products') }}">
                                         <svg class="bi">
                                             <use xlink:href="#cart" />
                                         </svg>
@@ -341,7 +344,8 @@ $path_array = explode('/', $url_path);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('customers') }}">
+                                    <a class="{{ $path_array[0] == 'customers' ? 'active bg-secondary-subtle text-primary nav-link d-flex align-items-center gap-2' : 'nav-link d-flex align-items-center gap-2' }}"
+                                        href="{{ route('customers') }}">
                                         <svg class="bi">
                                             <use xlink:href="#people" />
                                         </svg>
@@ -398,17 +402,12 @@ $path_array = explode('/', $url_path);
         function handleIntersection(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Element is in the viewport
-                    // Perform your desired effect here
-                    // You can also trigger animations or other effects
-                    console.log("in view");
                     const overlay = document.querySelector('.modal-backdrop')
                     if(overlay) {
                         overlay.remove()
                     }
                 } else {
-                    // Element is not in the viewport
-                    // Perform cleanup or other actions if needed
+                    //
                 }
             });
         }

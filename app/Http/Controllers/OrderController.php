@@ -6,6 +6,7 @@ use App\Mail\MailableName;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ShoppingCart;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +18,7 @@ class OrderController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        $orders = $user->orders;
+        $orders = $user->orders->sortByDesc('created_at');
 
         return view('order.index', ['user' => $user, 'orders' => $orders]);
     }
@@ -65,5 +66,11 @@ class OrderController extends Controller
     public function show(Order $order): View
     {
         return view('order.show', ['order' => $order]);
+    }
+
+    public function destroy(Order $order): RedirectResponse
+    {
+        $order->delete();
+        return back()->with('success', "Successfully deleted the order id: $order");
     }
 }

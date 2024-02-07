@@ -1,7 +1,48 @@
 @extends('layouts.admin')
 
 @section('content')
-<div>
-    <h1>This is order</h1>
+<div class="mt-4">
+    <h2>Orders data</h2>
+    <div class="table-responsive ">
+        <table class="table table-striped ">
+            <thead>
+                <tr>
+                    <th scope="col">Order Items ID</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Order by</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($orderItems as $orderItem)
+                <tr>
+                    <th scope="row">{{ $orderItem->id }}</th>
+                    <td><img class="rounded-circle " style="width: 70px; height: 70px"
+                            src="{{ asset('images/' . $orderItem->menu->image_url) }}"
+                            alt="{{ $orderItem->menu->name }}">
+                    </td>
+                    <td>{{ $orderItem->menu->name }}</td>
+                    <td>{{ $orderItem->order->user->name }}</td>
+                    <td>{{ $orderItem->unit_price }} $</td>
+                    <td>{{ $orderItem->quantity }}</td>
+                    <td>
+                        <form action="{{ route('orderItem.destroy' , ['orderItem' => $orderItem->id]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger ">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="my-5">
+        {{ $orderItems->links() }}
+    </div>
 </div>
 @endsection

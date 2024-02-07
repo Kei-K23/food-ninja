@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -72,11 +73,14 @@ Route::group([], function () {
     Route::get('/order', [OrderController::class, 'index'])->name('order');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
     Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
+    Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
 });
+
 
 // search route
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
+// review route
 Route::group([], function () {
     Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
     Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
@@ -98,5 +102,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group([], function () {
         Route::get('/customers', [CustomerController::class, 'index'])->name('customers');
+    });
+
+    Route::group([], function () {
+        Route::delete('/orderItem/{orderItem}', [OrderItemController::class, 'destroy'])->name('orderItem.destroy');
     });
 });

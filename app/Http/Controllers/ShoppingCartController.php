@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class ShoppingCartController extends Controller
@@ -12,7 +14,12 @@ class ShoppingCartController extends Controller
     public function index(): View
     {
         $user = Auth::user();
-        $carts = ShoppingCart::with('menu')->where('user_id', $user->id)->get();
+        $carts = ShoppingCart::with('menu')
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+
         return view('shopping-cart.index', ['user' => $user, 'carts' => $carts]);
     }
 
