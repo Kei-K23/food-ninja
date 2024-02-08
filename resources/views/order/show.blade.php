@@ -16,6 +16,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Unit Price</th>
                                     <th scope="col">Quantity</th>
+                                    <th scope="col">Order from</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,8 +27,9 @@
                                             src="{{ asset('images/' . $orderItem->menu->image_url) }}"
                                             alt="{{ $orderItem->menu->name }}"></td>
                                     <td>{{ $orderItem->menu->name }}</td>
-                                    <td>{{ $orderItem->unit_price }}</td>
+                                    <td>{{ $orderItem->unit_price }} $</td>
                                     <td>{{ $orderItem->quantity }}</td>
+                                    <td>{{ $orderItem->menu->restaurant->name }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

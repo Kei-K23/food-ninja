@@ -8,6 +8,12 @@ use Illuminate\View\View;
 
 class AdminOrderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+    }
+
     public function index(Request $request): View
     {
         $restaurantId = $request->user()->restaurant->id;

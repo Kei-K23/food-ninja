@@ -9,6 +9,12 @@ use Illuminate\View\View;
 
 class CustomerController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+    }
+
     public function index(Request $request): View
     {
         $user = $request->user();
