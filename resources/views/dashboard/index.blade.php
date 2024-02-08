@@ -26,9 +26,21 @@
                 @foreach ($orderItems as $orderItem)
                 <tr>
                     <th scope="row">{{ $orderItem->id }}</th>
-                    <td><img class="rounded-circle " style="width: 70px; height: 70px"
+                    <td>
+                        @if ($orderItem->menu->image_url && file_exists(public_path('images/' .
+                        $orderItem->menu->image_url)))
+                        <img class="rounded-circle " style="width: 70px; height: 70px"
                             src="{{ asset('images/' . $orderItem->menu->image_url) }}"
                             alt="{{ $orderItem->menu->name }}">
+                        @elseif ($orderItem->menu->image_url && file_exists(public_path('storage/images/' .
+                        $orderItem->menu->image_url)))
+                        <img class="rounded-circle " style="width: 70px; height: 70px"
+                            src="{{ asset('storage/images/' . $orderItem->menu->image_url) }}"
+                            alt="{{ $orderItem->menu->name }}">
+                        @else
+                        <img class="rounded-circle " style="width: 70px; height: 70px"
+                            src="{{ asset('images/placeholder.png') }}" alt="{{ $orderItem->menu->name }}">
+                        @endif
                     </td>
                     <td>{{ $orderItem->menu->name }}</td>
                     <td>{{ $orderItem->unit_price }}</td>

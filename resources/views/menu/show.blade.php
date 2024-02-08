@@ -21,8 +21,18 @@
                 Add to Cart</button>
         </div>
         <div>
-            <img class="w-100  h-100 rounded-3 shadow-sm" src="{{ asset('images/' . $menu->image_url) }}"
+            @if ($menu->image_url && file_exists(public_path('images/' .
+            $menu->image_url)))
+            <img class="w-100 h-100 rounded-3 shadow-sm" src="{{ asset('images/' . $menu->image_url) }}"
                 alt="{{ $menu->name }}">
+            @elseif ($menu->image_url && file_exists(public_path('storage/images/' .
+            $menu->image_url)))
+            <img class="w-100 h-100 rounded-3 shadow-sm" src="{{ asset('storage/images/' . $menu->image_url) }}"
+                alt="{{ $menu->name }}">
+            @else
+            <img class="w-100 h-100 rounded-3 shadow-sm" src="{{ asset('images/placeholder.png') }}"
+                alt="{{ $menu->name }}">
+            @endif
         </div>
     </div>
 
