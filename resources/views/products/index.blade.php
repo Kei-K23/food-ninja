@@ -19,7 +19,8 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="Menu name" required>
+                                <input value="{{old('name')}}" type="text" class="form-control" name="name"
+                                    placeholder="Menu name" required>
                                 @error('name')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
@@ -30,7 +31,7 @@
                             <label class="col-sm-3 col-form-label">Description</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="description" placeholder="Description"
-                                    required></textarea>
+                                    required>{{old('description')}}</textarea>
                                 @error('description')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
@@ -40,8 +41,8 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Price</label>
                             <div class="col-sm-9">
-                                <input id="longitude-input" type="number" class="form-control" name="price"
-                                    placeholder="Price" required />
+                                <input value="{{old('price')}}" id="longitude-input" type="number" class="form-control"
+                                    name="price" placeholder="Price" required />
                                 @error('price')
                                 <span class="text-danger  ">*{{ $message }}</span>
                                 @enderror
@@ -53,7 +54,8 @@
                             <div class="col-sm-9">
                                 <select name="category_id" required class="form-select">
                                     @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ old('category_id')==$category->id ?
+                                        'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
 
                                 </select>

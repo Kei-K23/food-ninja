@@ -20,8 +20,17 @@ class ProductController extends Controller
         return view('products.index', ['menus' => $menus, 'restaurantId' => $restaurantId, 'categories' => $categories]);
     }
 
-    public function show(Menu $menu): View
+    public function show(Request $request, Menu $menu): View
     {
-        return view('products.show', ['menu' => $menu]);
+        $user = $request->user();
+        $restaurantId = $user->restaurant->id;
+
+        $categories = Category::all();
+
+        return view('products.show', [
+            'menu' => $menu,
+            'categories' => $categories,
+            'restaurantId' => $restaurantId
+        ]);
     }
 }

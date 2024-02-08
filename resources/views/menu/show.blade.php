@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="d-flex flex-column flex-md-row  align-items-start  justify-content-center gap-5">
-        <div>
+        <div class="flex-grow-1 ">
             <div class="d-flex align-items-center  justify-content-between ">
                 <div class="d-flex align-items-center gap-2 ">
                     <h2 class="text-primary">{{ $menu->name }}</h2>
@@ -23,15 +23,15 @@
         <div>
             @if ($menu->image_url && file_exists(public_path('images/' .
             $menu->image_url)))
-            <img class="w-100 h-100 rounded-3 shadow-sm" src="{{ asset('images/' . $menu->image_url) }}"
-                alt="{{ $menu->name }}">
+            <img style="height: 250px; width: 250px" class=" rounded-3 shadow-sm"
+                src="{{ asset('images/' . $menu->image_url) }}" alt="{{ $menu->name }}">
             @elseif ($menu->image_url && file_exists(public_path('storage/images/' .
             $menu->image_url)))
-            <img class="w-100 h-100 rounded-3 shadow-sm" src="{{ asset('storage/images/' . $menu->image_url) }}"
-                alt="{{ $menu->name }}">
+            <img style="height: 250px; width: 250px" class="  rounded-3 shadow-sm"
+                src="{{ asset('storage/images/' . $menu->image_url) }}" alt="{{ $menu->name }}">
             @else
-            <img class="w-100 h-100 rounded-3 shadow-sm" src="{{ asset('images/placeholder.png') }}"
-                alt="{{ $menu->name }}">
+            <img style="height: 250px; width: 250px" class=" rounded-3 shadow-sm"
+                src="{{ asset('images/placeholder.png') }}" alt="{{ $menu->name }}">
             @endif
         </div>
     </div>

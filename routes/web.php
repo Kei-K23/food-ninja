@@ -99,6 +99,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group([], function () {
         Route::get('/products', [ProductController::class, 'index'])->name('products');
         Route::post('/products', [MenuController::class, 'store'])->name('products.store');
+        Route::put('/products/{menu}', [MenuController::class, 'update'])->name('products.update');
+        Route::delete('/products/{menu}', [MenuController::class, 'destroy'])->name('products.destroy');
         Route::get('/products/{menu}', [ProductController::class, 'show'])->name('products.show');
     });
 
