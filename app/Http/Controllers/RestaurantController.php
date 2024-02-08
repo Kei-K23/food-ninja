@@ -18,7 +18,7 @@ class RestaurantController extends Controller
 
     public function show(Restaurant $restaurant): View
     {
-        $menus = Menu::where('restaurant_id', $restaurant->id)->paginate(10);
+        $menus = Menu::where('restaurant_id', $restaurant->id)->orderBy('created_at', 'desc')->paginate(10);
 
         return view('restaurant.show', ['restaurant' => $restaurant, 'menus' => $menus]);
     }

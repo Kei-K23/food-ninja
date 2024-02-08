@@ -29,7 +29,6 @@
 
                     @foreach ($carts as $cart)
                     @php
-                    // Calculate the subtotal price for each item and add it to the total price
                     $subtotal = $cart->menu->price * $cart->quantity;
                     $totalPrice += $subtotal;
                     @endphp
@@ -40,8 +39,20 @@
                         @foreach ($carts as $cart)
                         <div class="list-group-item d-flex flex-column flex-md-row  justify-content-between gap-4 ">
                             <div class="d-flex gap-3">
+                                @if ($cart->menu->image_url && file_exists(public_path('images/' .
+                                $cart->menu->image_url)))
                                 <img style="width: 150px; height: 100px" class="rounded-3 "
                                     src="{{ asset('images/' . $cart->menu->image_url) }}" alt="{{ $cart->menu->name }}">
+                                @elseif ($cart->menu->image_url && file_exists(public_path('storage/images/' .
+                                $cart->menu->image_url)))
+                                <img style="width: 150px; height: 100px" class="rounded-3 "
+                                    src="{{ asset('storage/images/' . $cart->menu->image_url) }}"
+                                    alt="{{ $cart->menu->name }}">
+                                @else
+                                <img style="width: 150px; height: 100px" class="rounded-3 "
+                                    src="{{ asset('images/placeholder.png') }}" alt="{{ $cart->menu->name }}">
+                                @endif
+
                                 <div>
                                     <h4>{{ $cart->menu->name }}</h4>
                                     <h5 class="text-success">{{ $cart->menu->price }} $</h5>
